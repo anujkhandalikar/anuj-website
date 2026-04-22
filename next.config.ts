@@ -12,7 +12,6 @@ const nextConfig: NextConfig = {
   // Enable React strict mode for better performance
   reactStrictMode: true,
 
-  // Experimental features for faster builds
   experimental: {
     // Optimize package imports
     optimizePackageImports: ['@tiptap/react', '@tiptap/starter-kit'],

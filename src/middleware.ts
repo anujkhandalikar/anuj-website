@@ -5,6 +5,11 @@ import { verifySession } from "@/lib/session";
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
+  const hostname = request.headers.get("host") || "";
+  if (hostname === "brandworld.anujk.in" || hostname.startsWith("brandworld.localhost")) {
+    return NextResponse.redirect("https://docs.google.com/presentation/d/13ltzgvgHhaldB3GX_h5TzlIi44cmql7dZ1J0DPlPWFI/edit?slide=id.g3e01e99e63a_2_2#slide=id.g3e01e99e63a_2_2");
+  }
+
   // Only protect mutation routes for pages API
   if (pathname.startsWith("/api/pages")) {
     const method = request.method;
@@ -38,5 +43,7 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/api/pages/:path*"],
+  matcher: [
+    "/((?!_next/static|_next/image|favicon.ico).*)",
+  ],
 };

@@ -20,12 +20,16 @@ const HTML = `<!DOCTYPE html>
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
+  html, body {
+    height: 100dvh;
+    overflow: hidden;
+  }
+
   body {
     background: var(--bg);
     color: var(--text);
     font-family: -apple-system, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', sans-serif;
     -webkit-font-smoothing: antialiased;
-    min-height: 100vh;
   }
 
   /* grain */
@@ -40,8 +44,13 @@ const HTML = `<!DOCTYPE html>
 
   main {
     max-width: 620px;
+    height: 100dvh;
     margin: 0 auto;
-    padding: 88px 36px 80px;
+    padding: 40px 36px 36px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
     opacity: 0;
     animation: appear 0.7s ease 0.1s forwards;
   }
@@ -49,10 +58,6 @@ const HTML = `<!DOCTYPE html>
   @keyframes appear { to { opacity: 1; } }
 
   /* ---- NOTCH VISUAL ---- */
-  .notch-wrap {
-    margin-bottom: 64px;
-  }
-
   .notch-bar {
     display: inline-flex;
     align-items: center;
@@ -60,16 +65,16 @@ const HTML = `<!DOCTYPE html>
     background: #1a1a1a;
     border: 1px solid rgba(255,255,255,0.08);
     border-radius: 100px;
-    padding: 8px 16px 8px 10px;
-    font-size: 13px;
+    padding: 7px 14px 7px 10px;
+    font-size: 12px;
     font-weight: 500;
     color: var(--dim);
     letter-spacing: -0.1px;
   }
 
   .notch-dot {
-    width: 8px;
-    height: 8px;
+    width: 7px;
+    height: 7px;
     background: var(--red);
     border-radius: 50%;
     animation: breathe 2.4s ease-in-out infinite;
@@ -83,12 +88,11 @@ const HTML = `<!DOCTYPE html>
 
   /* ---- HEADLINE ---- */
   h1 {
-    font-size: clamp(40px, 8vw, 68px);
+    font-size: clamp(34px, 6vw, 56px);
     font-weight: 800;
     letter-spacing: -3px;
     line-height: 1.0;
     color: var(--text);
-    margin-bottom: 24px;
   }
 
   h1 em {
@@ -98,12 +102,11 @@ const HTML = `<!DOCTYPE html>
 
   /* ---- DESC ---- */
   .desc {
-    font-size: 17px;
+    font-size: 15px;
     color: var(--dim);
-    line-height: 1.72;
+    line-height: 1.6;
     letter-spacing: -0.2px;
     max-width: 440px;
-    margin-bottom: 52px;
   }
 
   /* ---- TASKS ---- */
@@ -111,18 +114,17 @@ const HTML = `<!DOCTYPE html>
     display: flex;
     flex-direction: column;
     gap: 0;
-    margin-bottom: 60px;
     border: 1px solid var(--border);
-    border-radius: 14px;
+    border-radius: 12px;
     overflow: hidden;
     background: #111;
   }
 
   .task {
     display: flex;
-    align-items: flex-start;
-    gap: 14px;
-    padding: 16px 20px;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 16px;
     border-bottom: 1px solid var(--border);
     transition: background 0.15s;
     cursor: default;
@@ -132,19 +134,18 @@ const HTML = `<!DOCTYPE html>
   .task:hover { background: rgba(255,255,255,0.02); }
 
   .task-icon {
-    font-size: 15px;
+    font-size: 14px;
     line-height: 1;
-    margin-top: 1px;
     flex-shrink: 0;
-    width: 20px;
+    width: 18px;
     text-align: center;
   }
 
   .task-text {
-    font-size: 14px;
+    font-size: 13px;
     color: var(--dim);
     letter-spacing: -0.1px;
-    line-height: 1.5;
+    line-height: 1.4;
   }
 
   .task-text strong {
@@ -154,24 +155,24 @@ const HTML = `<!DOCTYPE html>
 
   /* ---- CTA ---- */
   .cta-pre {
-    font-size: 13px;
+    font-size: 12px;
     color: var(--dimmer);
-    margin-bottom: 12px;
+    margin-bottom: -12px;
     letter-spacing: 0.2px;
   }
 
   .cta-stack {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 6px;
     max-width: 360px;
   }
 
   .btn {
     width: 100%;
-    padding: 13px 18px;
+    padding: 11px 16px;
     border-radius: 10px;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 600;
     letter-spacing: -0.2px;
     cursor: pointer;
@@ -189,41 +190,37 @@ const HTML = `<!DOCTYPE html>
     border: 1px solid var(--border);
   }
 
-  .btn-ghost:hover {
-    background: rgba(255,255,255,0.07);
-  }
+  .btn-ghost:hover { background: rgba(255,255,255,0.07); }
 
   .btn-red {
     background: var(--red);
     color: #fff;
   }
 
-  .btn-red:hover {
-    background: #ff5555;
-  }
+  .btn-red:hover { background: #ff5555; }
 
   .btn-right {
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 400;
     opacity: 0.5;
   }
 
   .count-line {
-    font-size: 12px;
+    font-size: 11px;
     color: var(--dimmer);
-    margin-top: 5px;
+    margin-top: 4px;
     padding-left: 2px;
-    min-height: 17px;
+    min-height: 15px;
     transition: color 0.3s;
   }
 
   .count-line.lit { color: var(--red); }
 
   /* ---- CLOSER ---- */
-  .sep { width: 28px; height: 1px; background: var(--border); margin: 52px 0; }
+  .sep { width: 24px; height: 1px; background: var(--border); }
 
   .closer {
-    font-size: 13px;
+    font-size: 12px;
     color: var(--dimmer);
     line-height: 1.8;
     letter-spacing: 0.1px;
@@ -235,7 +232,7 @@ const HTML = `<!DOCTYPE html>
   }
 
   @media (max-width: 480px) {
-    main { padding: 64px 22px 60px; }
+    main { padding: 28px 22px 24px; gap: 16px; }
     .cta-stack { max-width: 100%; }
     h1 { letter-spacing: -2px; }
   }
@@ -245,7 +242,7 @@ const HTML = `<!DOCTYPE html>
 <main>
 
   <!-- notch indicator -->
-  <div class="notch-wrap">
+  <div>
     <div class="notch-bar">
       <div class="notch-dot"></div>
       chotu is here

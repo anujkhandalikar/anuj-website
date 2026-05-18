@@ -154,18 +154,57 @@ const HTML = `<!DOCTYPE html>
   }
 
   /* ---- CTA ---- */
+  .cta-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
   .cta-pre {
     font-size: 12px;
     color: var(--dimmer);
-    margin-bottom: -12px;
     letter-spacing: 0.2px;
   }
+
+  .email-input {
+    width: 100%;
+    max-width: 360px;
+    padding: 11px 14px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: rgba(255,255,255,0.04);
+    color: var(--text);
+    font-family: inherit;
+    font-size: 13px;
+    letter-spacing: -0.1px;
+    outline: none;
+    margin-bottom: 6px;
+    transition: border-color 0.15s;
+  }
+
+  .email-input::placeholder { color: var(--dimmer); }
+  .email-input:focus { border-color: rgba(255,255,255,0.18); }
 
   .cta-stack {
     display: flex;
     flex-direction: column;
     gap: 6px;
     max-width: 360px;
+  }
+
+  .status-line {
+    font-size: 11px;
+    min-height: 16px;
+    padding-left: 2px;
+    margin-top: 4px;
+  }
+  .status-line.err { color: var(--red); }
+  .status-line.ok  { color: rgba(239,239,239,0.35); }
+
+  .done-msg {
+    font-size: 14px;
+    color: var(--dim);
+    padding: 14px 0 2px;
   }
 
   .btn {
@@ -204,17 +243,6 @@ const HTML = `<!DOCTYPE html>
     font-weight: 400;
     opacity: 0.5;
   }
-
-  .count-line {
-    font-size: 11px;
-    color: var(--dimmer);
-    margin-top: 4px;
-    padding-left: 2px;
-    min-height: 15px;
-    transition: color 0.3s;
-  }
-
-  .count-line.lit { color: var(--red); }
 
   /* ---- CLOSER ---- */
   .sep { width: 24px; height: 1px; background: var(--border); }
@@ -282,22 +310,32 @@ const HTML = `<!DOCTYPE html>
   </div>
 
   <!-- cta -->
-  <p class="cta-pre">want this?</p>
+  <div class="cta-wrap">
+    <p class="cta-pre">want this?</p>
 
-  <div class="cta-stack">
-    <div>
-      <button class="btn btn-ghost" onclick="increment('curious')">
-        <span>i'm curious — try it out</span>
-        <span class="btn-right">not sure yet →</span>
-      </button>
-      <div class="count-line" id="curious-count"></div>
+    <div id="cta-form">
+      <input
+        id="email-input"
+        class="email-input"
+        type="email"
+        placeholder="your@email.com"
+        autocomplete="email"
+      />
+      <div class="cta-stack">
+        <button class="btn btn-ghost" onclick="submit('curious')">
+          <span>i'm curious — try it out</span>
+          <span class="btn-right">not sure yet →</span>
+        </button>
+        <button class="btn btn-red" onclick="submit('pay')">
+          <span>i'll pay $9/month</span>
+          <span class="btn-right">yes, take my money →</span>
+        </button>
+      </div>
+      <div class="status-line" id="status"></div>
     </div>
-    <div>
-      <button class="btn btn-red" onclick="increment('pay')">
-        <span>i'll pay $9/month</span>
-        <span class="btn-right">yes, take my money →</span>
-      </button>
-      <div class="count-line" id="pay-count"></div>
+
+    <div id="cta-done" style="display:none">
+      <div class="done-msg" id="done-msg"></div>
     </div>
   </div>
 
@@ -311,35 +349,72 @@ const HTML = `<!DOCTYPE html>
 </main>
 
 <script>
-  let counts = { curious: 0, pay: 0 };
-  try {
-    const s = localStorage.getItem('chotu_counts');
-    if (s) counts = JSON.parse(s);
-  } catch(e) {}
+  const STORAGE_KEY = 'chotu_submitted';
 
-  function save() {
-    try { localStorage.setItem('chotu_counts', JSON.stringify(counts)); } catch(e) {}
+  function alreadySubmitted() {
+    try { return !!localStorage.getItem(STORAGE_KEY); } catch(e) { return false; }
   }
 
-  function increment(type) {
-    counts[type]++;
-    save();
-    render(type);
+  function markSubmitted(type) {
+    try { localStorage.setItem(STORAGE_KEY, type); } catch(e) {}
   }
 
-  function render(type) {
-    const n = counts[type];
-    const el = document.getElementById(type + '-count');
-    if (n === 0) { el.textContent = ''; return; }
-    el.textContent = type === 'pay'
-      ? \`\${n} \${n === 1 ? 'person' : 'people'} willing to pay\`
-      : \`\${n} \${n === 1 ? 'person' : 'people'} curious\`;
-    el.classList.add('lit');
-    setTimeout(() => el.classList.remove('lit'), 1000);
+  function showDone(msg) {
+    document.getElementById('cta-form').style.display = 'none';
+    const done = document.getElementById('cta-done');
+    done.style.display = 'block';
+    document.getElementById('done-msg').textContent = msg;
   }
 
-  if (counts.curious > 0) render('curious');
-  if (counts.pay > 0) render('pay');
+  function setStatus(msg, isError) {
+    const el = document.getElementById('status');
+    el.textContent = msg;
+    el.className = 'status-line' + (isError ? ' err' : ' ok');
+  }
+
+  async function submit(type) {
+    if (alreadySubmitted()) {
+      showDone("you're already on the list.");
+      return;
+    }
+
+    const email = document.getElementById('email-input').value.trim();
+    if (!email) { setStatus('enter your email first.', true); return; }
+
+    const btns = document.querySelectorAll('.btn');
+    btns.forEach(b => b.disabled = true);
+    setStatus('...', false);
+
+    try {
+      const res = await fetch('/api/chotu/signup', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ email, type }),
+      });
+      const data = await res.json();
+
+      if (res.ok) {
+        markSubmitted(type);
+        showDone(type === 'pay' ? "you're in. we'll be in touch." : "noted. we'll let you know.");
+      } else if (data.error === 'already_signed_up') {
+        markSubmitted(data.existing_type);
+        showDone("you're already on the list.");
+      } else if (data.error === 'invalid_email') {
+        setStatus('that email looks off.', true);
+        btns.forEach(b => b.disabled = false);
+      } else {
+        setStatus('something went wrong. try again.', true);
+        btns.forEach(b => b.disabled = false);
+      }
+    } catch(e) {
+      setStatus('something went wrong. try again.', true);
+      btns.forEach(b => b.disabled = false);
+    }
+  }
+
+  if (alreadySubmitted()) {
+    showDone("you're already on the list.");
+  }
 </script>
 </body>
 </html>`;

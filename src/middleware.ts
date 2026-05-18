@@ -10,6 +10,10 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect("https://docs.google.com/presentation/d/13ltzgvgHhaldB3GX_h5TzlIi44cmql7dZ1J0DPlPWFI/edit?slide=id.g3e01e99e63a_2_2#slide=id.g3e01e99e63a_2_2");
   }
 
+  if (hostname === "chotu.anujk.in" || hostname.startsWith("chotu.localhost")) {
+    return NextResponse.rewrite(new URL("/chotu", request.url));
+  }
+
   // Only protect mutation routes for pages API
   if (pathname.startsWith("/api/pages")) {
     const method = request.method;

@@ -290,17 +290,11 @@ const HTML = `<!DOCTYPE html>
       height: auto;
       min-height: 100dvh;
       justify-content: flex-start;
-      padding: 36px 22px 48px;
-      gap: 22px;
+      padding: 32px 24px 48px;
+      gap: 18px;
     }
     .cta-stack { max-width: 100%; }
     .email-input { max-width: 100%; }
-    h1 { font-size: clamp(28px, 8vw, 38px); letter-spacing: -1px; line-height: 1.1; }
-    .desc { font-size: 14px; line-height: 1.7; letter-spacing: 0px; }
-    .task { padding: 12px 16px; }
-    .task-text { font-size: 14px; line-height: 1.5; letter-spacing: 0px; }
-    .btn { font-size: 14px; padding: 14px 16px; }
-    .closer { font-size: 13px; line-height: 1.7; letter-spacing: 0px; }
   }
 </style>
 </head>

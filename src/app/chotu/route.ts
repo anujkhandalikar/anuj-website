@@ -286,14 +286,21 @@ const HTML = `<!DOCTYPE html>
   }
 
   @media (max-width: 480px) {
-    main { padding: 32px 22px 40px; gap: 20px; }
+    main {
+      height: auto;
+      min-height: 100dvh;
+      justify-content: flex-start;
+      padding: 36px 22px 48px;
+      gap: 22px;
+    }
     .cta-stack { max-width: 100%; }
     .email-input { max-width: 100%; }
-    h1 { font-size: clamp(28px, 8vw, 38px); letter-spacing: -1px; line-height: 1.08; }
+    h1 { font-size: clamp(28px, 8vw, 38px); letter-spacing: -1px; line-height: 1.1; }
     .desc { font-size: 14px; line-height: 1.7; letter-spacing: 0px; }
-    .task { padding: 11px 16px; }
+    .task { padding: 12px 16px; }
     .task-text { font-size: 14px; line-height: 1.5; letter-spacing: 0px; }
-    .btn { font-size: 14px; padding: 13px 16px; }
+    .btn { font-size: 14px; padding: 14px 16px; }
+    .closer { font-size: 13px; line-height: 1.7; letter-spacing: 0px; }
   }
 </style>
 </head>

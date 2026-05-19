@@ -47,14 +47,14 @@ const HTML = `<!DOCTYPE html>
   }
 
   main {
-    max-width: 620px;
+    max-width: 560px;
     height: 100dvh;
     margin: 0 auto;
-    padding: 40px 36px 36px;
+    padding: 48px 40px;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 16px;
+    gap: 28px;
     opacity: 0;
     animation: appear 0.7s ease 0.1s forwards;
   }
@@ -94,10 +94,10 @@ const HTML = `<!DOCTYPE html>
 
   /* ---- HEADLINE ---- */
   h1 {
-    font-size: clamp(26px, 4.5vw, 42px);
-    font-weight: 800;
-    letter-spacing: -2px;
-    line-height: 1.05;
+    font-size: clamp(32px, 5vw, 48px);
+    font-weight: 700;
+    letter-spacing: -1.8px;
+    line-height: 1.02;
     color: var(--text);
   }
 
@@ -108,89 +108,52 @@ const HTML = `<!DOCTYPE html>
 
   /* ---- DESC ---- */
   .desc {
-    font-size: 13px;
+    font-size: 14px;
     color: var(--dim);
     line-height: 1.6;
     letter-spacing: -0.1px;
-    max-width: 400px;
+    max-width: 440px;
   }
 
-  /* ---- TASKS ---- */
-  .tasks-wrap {
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    overflow: hidden;
-    background: #111;
-  }
-
-  .tasks {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .task {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 9px 16px;
-    border-bottom: 1px solid var(--border);
-    transition: background 0.15s;
-    cursor: default;
-  }
-
-  .task:last-child { border-bottom: none; }
-  .task:hover { background: rgba(255,255,255,0.02); }
-
-  .task-more { cursor: default; }
-  .task-more .task-text { font-size: 11px; color: var(--dimmer); font-style: italic; }
-
-  .task-icon {
-    font-size: 14px;
-    line-height: 1;
-    flex-shrink: 0;
-    width: 18px;
-    text-align: center;
-  }
-
-  .task-text {
+  /* ---- CAPABILITIES ---- */
+  .capabilities {
     font-size: 13px;
-    color: var(--dim);
+    color: var(--text);
+    line-height: 1.9;
     letter-spacing: -0.1px;
-    line-height: 1.4;
+    font-weight: 500;
   }
 
-  .task-text strong {
-    color: var(--text);
-    font-weight: 500;
+  .capabilities .cap-sep {
+    color: var(--dimmer);
+    margin: 0 10px;
+  }
+
+  .capabilities .cap-more {
+    color: var(--dimmer);
+    font-weight: 400;
   }
 
   /* ---- CTA ---- */
   .cta-wrap {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-  }
-
-  .cta-pre {
-    font-size: 15px;
-    font-weight: 600;
-    color: var(--text);
-    letter-spacing: -0.2px;
+    gap: 8px;
   }
 
   .email-input {
     width: 100%;
-    max-width: 360px;
-    padding: 11px 14px;
+    max-width: 380px;
+    padding: 13px 16px;
     border-radius: 10px;
     border: 1px solid var(--border);
     background: rgba(255,255,255,0.04);
     color: var(--text);
     font-family: inherit;
-    font-size: 13px;
+    font-size: 14px;
     letter-spacing: -0.1px;
     outline: none;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
     transition: border-color 0.15s;
   }
 
@@ -200,8 +163,8 @@ const HTML = `<!DOCTYPE html>
   .cta-stack {
     display: flex;
     flex-direction: column;
-    gap: 6px;
-    max-width: 360px;
+    gap: 8px;
+    max-width: 380px;
   }
 
   .status-line {
@@ -235,9 +198,9 @@ const HTML = `<!DOCTYPE html>
 
   .btn {
     width: 100%;
-    padding: 11px 16px;
+    padding: 13px 18px;
     border-radius: 10px;
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 600;
     letter-spacing: -0.2px;
     cursor: pointer;
@@ -270,31 +233,19 @@ const HTML = `<!DOCTYPE html>
     opacity: 0.5;
   }
 
-  /* ---- CLOSER ---- */
-  .sep { width: 24px; height: 1px; background: var(--border); }
-
-  .closer {
-    font-size: 12px;
-    color: var(--dimmer);
-    line-height: 1.8;
-    letter-spacing: 0.1px;
-  }
-
-  .closer span {
-    color: var(--red);
-    opacity: 0.8;
-  }
-
   @media (max-width: 480px) {
     main {
       height: auto;
       min-height: 100dvh;
       justify-content: flex-start;
-      padding: 32px 24px 48px;
-      gap: 18px;
+      padding: 40px 24px 56px;
+      gap: 24px;
     }
     .cta-stack { max-width: 100%; }
     .email-input { max-width: 100%; }
+    h1 { font-size: clamp(30px, 9vw, 40px); }
+    .capabilities { line-height: 2; }
+    .capabilities .cap-sep { margin: 0 6px; }
   }
 </style>
 </head>
@@ -319,42 +270,16 @@ const HTML = `<!DOCTYPE html>
 
   <!-- desc -->
   <p class="desc">
-    you open your phone to do one thing and end up doing five other things. chotu sits in your notch, takes the task, and gets it done — while you stay in your world.
+    open your phone for one thing, end up doing five. chotu takes the task — you stay in your world.
   </p>
 
-  <!-- tasks list -->
-  <div class="tasks-wrap">
-    <div class="tasks">
-      <div class="task">
-        <span class="task-icon">🛒</span>
-        <span class="task-text"><strong>order groceries</strong></span>
-      </div>
-      <div class="task">
-        <span class="task-icon">💬</span>
-        <span class="task-text"><strong>manage whatsapp</strong></span>
-      </div>
-      <div class="task">
-        <span class="task-icon">🔍</span>
-        <span class="task-text"><strong>research anything</strong></span>
-      </div>
-      <div class="task">
-        <span class="task-icon">✅</span>
-        <span class="task-text"><strong>approve & move on</strong></span>
-      </div>
-      <div class="task">
-        <span class="task-icon">🔕</span>
-        <span class="task-text"><strong>protect your focus</strong></span>
-      </div>
-      <div class="task task-more">
-        <span class="task-text">and a lot more...</span>
-      </div>
-    </div>
-  </div>
+  <!-- capabilities -->
+  <p class="capabilities">
+    <span>orders groceries</span><span class="cap-sep">·</span><span>manages whatsapp</span><span class="cap-sep">·</span><span>researches anything</span><span class="cap-sep">·</span><span>handles approvals</span><span class="cap-sep">·</span><span>protects your focus</span><span class="cap-more"> &nbsp;and a lot more.</span>
+  </p>
 
   <!-- cta -->
   <div class="cta-wrap">
-    <p class="cta-pre">want this?</p>
-
     <div id="cta-form">
       <input
         id="email-input"
@@ -384,13 +309,6 @@ const HTML = `<!DOCTYPE html>
       <div class="done-msg" id="done-msg"></div>
       <button class="change-btn" onclick="showForm()">change my mind</button>
     </div>
-  </div>
-
-  <div class="sep"></div>
-
-  <div class="closer">
-    no gazillion tabs. no getting sucked in.<br>
-    just you, your work, and <span>chotu</span> handling the noise.
   </div>
 
 </main>

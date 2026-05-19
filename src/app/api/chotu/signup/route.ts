@@ -1,6 +1,19 @@
 import { NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase";
 
+export async function GET() {
+  const { data, error } = await supabase
+    .from("chotu_signups")
+    .select("type");
+
+  if (error) return NextResponse.json({ curious: 0, pay: 0 });
+
+  const curious = data.filter((r) => r.type === "curious").length;
+  const pay = data.filter((r) => r.type === "pay").length;
+
+  return NextResponse.json({ curious, pay });
+}
+
 export async function POST(request: Request) {
   const { email, type } = await request.json();
 
@@ -14,23 +27,11 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "invalid_email" }, { status: 400 });
   }
 
-  const { data: existing } = await supabase
-    .from("chotu_signups")
-    .select("id, type")
-    .eq("email", normalized)
-    .maybeSingle();
-
-  if (existing) {
-    return NextResponse.json({ error: "already_signed_up", existing_type: existing.type }, { status: 409 });
-  }
-
   const { error } = await supabase
     .from("chotu_signups")
-    .insert({ email: normalized, type });
+    .upsert({ email: normalized, type }, { onConflict: "email" });
 
-  if (error) {
-    return NextResponse.json({ error: "db_error" }, { status: 500 });
-  }
+  if (error) return NextResponse.json({ error: "db_error" }, { status: 500 });
 
   return NextResponse.json({ ok: true });
 }

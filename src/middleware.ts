@@ -11,7 +11,9 @@ export async function middleware(request: NextRequest) {
   }
 
   if (hostname === "chotu.anujk.in" || hostname.startsWith("chotu.localhost")) {
-    return NextResponse.rewrite(new URL("/chotu", request.url));
+    if (!pathname.startsWith("/api/")) {
+      return NextResponse.rewrite(new URL("/chotu", request.url));
+    }
   }
 
   // Only protect mutation routes for pages API

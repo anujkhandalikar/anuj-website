@@ -50,48 +50,50 @@ const HTML = `<!DOCTYPE html>
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 20px;
+    gap: 16px;
     opacity: 0;
     animation: appear 0.7s ease 0.1s forwards;
   }
 
   @keyframes appear { to { opacity: 1; } }
 
-  /* ---- NOTCH VISUAL ---- */
-  .notch-bar {
-    display: inline-flex;
+  /* ---- WORDMARK ---- */
+  .wordmark {
+    display: flex;
     align-items: center;
-    gap: 8px;
-    background: #1a1a1a;
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 100px;
-    padding: 7px 14px 7px 10px;
-    font-size: 12px;
-    font-weight: 500;
-    color: var(--dim);
-    letter-spacing: -0.1px;
+    gap: 9px;
   }
 
-  .notch-dot {
-    width: 7px;
-    height: 7px;
+  .wordmark-icon {
+    width: 28px;
+    height: 28px;
     background: var(--red);
-    border-radius: 50%;
-    animation: breathe 2.4s ease-in-out infinite;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     flex-shrink: 0;
   }
 
-  @keyframes breathe {
-    0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 0 0 rgba(255,59,59,0.4); }
-    50% { opacity: 0.7; transform: scale(0.85); box-shadow: 0 0 0 4px rgba(255,59,59,0); }
+  .wordmark-icon svg {
+    width: 16px;
+    height: 16px;
+    fill: #fff;
+  }
+
+  .wordmark-name {
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    color: var(--text);
   }
 
   /* ---- HEADLINE ---- */
   h1 {
-    font-size: clamp(34px, 6vw, 56px);
+    font-size: clamp(26px, 4.5vw, 42px);
     font-weight: 800;
-    letter-spacing: -3px;
-    line-height: 1.0;
+    letter-spacing: -2px;
+    line-height: 1.05;
     color: var(--text);
   }
 
@@ -102,29 +104,31 @@ const HTML = `<!DOCTYPE html>
 
   /* ---- DESC ---- */
   .desc {
-    font-size: 15px;
+    font-size: 13px;
     color: var(--dim);
     line-height: 1.6;
-    letter-spacing: -0.2px;
-    max-width: 440px;
+    letter-spacing: -0.1px;
+    max-width: 400px;
   }
 
   /* ---- TASKS ---- */
-  .tasks {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
+  .tasks-wrap {
     border: 1px solid var(--border);
     border-radius: 12px;
     overflow: hidden;
     background: #111;
   }
 
+  .tasks {
+    display: flex;
+    flex-direction: column;
+  }
+
   .task {
     display: flex;
     align-items: center;
     gap: 12px;
-    padding: 10px 16px;
+    padding: 9px 16px;
     border-bottom: 1px solid var(--border);
     transition: background 0.15s;
     cursor: default;
@@ -132,6 +136,9 @@ const HTML = `<!DOCTYPE html>
 
   .task:last-child { border-bottom: none; }
   .task:hover { background: rgba(255,255,255,0.02); }
+
+  .task-more { cursor: default; }
+  .task-more .task-text { font-size: 11px; color: var(--dimmer); font-style: italic; }
 
   .task-icon {
     font-size: 14px;
@@ -161,9 +168,10 @@ const HTML = `<!DOCTYPE html>
   }
 
   .cta-pre {
-    font-size: 12px;
-    color: var(--dimmer);
-    letter-spacing: 0.2px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: -0.2px;
   }
 
   .email-input {
@@ -204,8 +212,22 @@ const HTML = `<!DOCTYPE html>
   .done-msg {
     font-size: 14px;
     color: var(--dim);
-    padding: 14px 0 2px;
+    padding: 14px 0 6px;
   }
+
+  .change-btn {
+    background: none;
+    border: none;
+    font-family: inherit;
+    font-size: 11px;
+    color: var(--dimmer);
+    cursor: pointer;
+    padding: 0;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .change-btn:hover { color: var(--dim); }
 
   .btn {
     width: 100%;
@@ -269,12 +291,17 @@ const HTML = `<!DOCTYPE html>
 <body>
 <main>
 
-  <!-- notch indicator -->
-  <div>
-    <div class="notch-bar">
-      <div class="notch-dot"></div>
-      chotu is here
+  <!-- wordmark -->
+  <div class="wordmark">
+    <div class="wordmark-icon">
+      <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+        <rect x="2" y="2" width="5" height="5" rx="1.5"/>
+        <rect x="9" y="2" width="5" height="5" rx="1.5"/>
+        <rect x="2" y="9" width="5" height="5" rx="1.5"/>
+        <rect x="9" y="9" width="5" height="5" rx="1.5" opacity="0.4"/>
+      </svg>
     </div>
+    <span class="wordmark-name">chotu</span>
   </div>
 
   <!-- headline -->
@@ -286,26 +313,31 @@ const HTML = `<!DOCTYPE html>
   </p>
 
   <!-- tasks list -->
-  <div class="tasks">
-    <div class="task">
-      <span class="task-icon">🛒</span>
-      <span class="task-text"><strong>order groceries</strong> — "get the usual from blinkit"</span>
-    </div>
-    <div class="task">
-      <span class="task-icon">💬</span>
-      <span class="task-text"><strong>manage whatsapp</strong> — drafts replies, summarises threads</span>
-    </div>
-    <div class="task">
-      <span class="task-icon">🔍</span>
-      <span class="task-text"><strong>research anything</strong> — no new tabs, no rabbit holes</span>
-    </div>
-    <div class="task">
-      <span class="task-icon">✅</span>
-      <span class="task-text"><strong>approve & move on</strong> — one tap dashboard when you need control</span>
-    </div>
-    <div class="task">
-      <span class="task-icon">🔕</span>
-      <span class="task-text"><strong>protect your focus</strong> — always present, never a distraction</span>
+  <div class="tasks-wrap">
+    <div class="tasks">
+      <div class="task">
+        <span class="task-icon">🛒</span>
+        <span class="task-text"><strong>order groceries</strong> — "get the usual from blinkit"</span>
+      </div>
+      <div class="task">
+        <span class="task-icon">💬</span>
+        <span class="task-text"><strong>manage whatsapp</strong> — drafts replies, summarises threads</span>
+      </div>
+      <div class="task">
+        <span class="task-icon">🔍</span>
+        <span class="task-text"><strong>research anything</strong> — no new tabs, no rabbit holes</span>
+      </div>
+      <div class="task">
+        <span class="task-icon">✅</span>
+        <span class="task-text"><strong>approve & move on</strong> — one tap dashboard when you need control</span>
+      </div>
+      <div class="task">
+        <span class="task-icon">🔕</span>
+        <span class="task-text"><strong>protect your focus</strong> — always present, never a distraction</span>
+      </div>
+      <div class="task task-more">
+        <span class="task-text">and a lot more...</span>
+      </div>
     </div>
   </div>
 
@@ -322,20 +354,25 @@ const HTML = `<!DOCTYPE html>
         autocomplete="email"
       />
       <div class="cta-stack">
-        <button class="btn btn-ghost" onclick="submit('curious')">
-          <span>i'm curious — try it out</span>
-          <span class="btn-right">not sure yet →</span>
-        </button>
-        <button class="btn btn-red" onclick="submit('pay')">
-          <span>i'll pay $9/month</span>
-          <span class="btn-right">yes, take my money →</span>
-        </button>
+        <div>
+          <button class="btn btn-ghost" onclick="submit('curious')">
+            <span>i'm curious — try it out</span>
+            <span class="btn-right" id="curious-count"></span>
+          </button>
+        </div>
+        <div>
+          <button class="btn btn-red" onclick="submit('pay')">
+            <span>i'll pay $9/month</span>
+            <span class="btn-right" id="pay-count"></span>
+          </button>
+        </div>
       </div>
       <div class="status-line" id="status"></div>
     </div>
 
     <div id="cta-done" style="display:none">
       <div class="done-msg" id="done-msg"></div>
+      <button class="change-btn" onclick="showForm()">change my mind</button>
     </div>
   </div>
 
@@ -349,21 +386,29 @@ const HTML = `<!DOCTYPE html>
 </main>
 
 <script>
-  const STORAGE_KEY = 'chotu_submitted';
+  const STORAGE_KEY = 'chotu_email';
 
-  function alreadySubmitted() {
-    try { return !!localStorage.getItem(STORAGE_KEY); } catch(e) { return false; }
+  function savedEmail() {
+    try { return localStorage.getItem(STORAGE_KEY) || ''; } catch(e) { return ''; }
   }
 
-  function markSubmitted(type) {
-    try { localStorage.setItem(STORAGE_KEY, type); } catch(e) {}
+  function saveEmail(email) {
+    try { localStorage.setItem(STORAGE_KEY, email); } catch(e) {}
   }
 
-  function showDone(msg) {
+  function showDone(type) {
     document.getElementById('cta-form').style.display = 'none';
     const done = document.getElementById('cta-done');
     done.style.display = 'block';
-    document.getElementById('done-msg').textContent = msg;
+    document.getElementById('done-msg').textContent =
+      type === 'pay' ? "you're in. we'll be in touch." : "noted. we'll let you know.";
+  }
+
+  function showForm() {
+    document.getElementById('cta-done').style.display = 'none';
+    document.getElementById('cta-form').style.display = 'block';
+    const saved = savedEmail();
+    if (saved) document.getElementById('email-input').value = saved;
   }
 
   function setStatus(msg, isError) {
@@ -372,12 +417,21 @@ const HTML = `<!DOCTYPE html>
     el.className = 'status-line' + (isError ? ' err' : ' ok');
   }
 
-  async function submit(type) {
-    if (alreadySubmitted()) {
-      showDone("you're already on the list.");
-      return;
-    }
+  function renderCounts(counts) {
+    const c = document.getElementById('curious-count');
+    const p = document.getElementById('pay-count');
+    if (c) c.textContent = counts.curious > 0 ? \`\${counts.curious} curious\` : '';
+    if (p) p.textContent = counts.pay > 0 ? \`\${counts.pay} willing to pay\` : '';
+  }
 
+  async function loadCounts() {
+    try {
+      const res = await fetch('/api/chotu/signup');
+      if (res.ok) renderCounts(await res.json());
+    } catch(e) {}
+  }
+
+  async function submit(type) {
     const email = document.getElementById('email-input').value.trim();
     if (!email) { setStatus('enter your email first.', true); return; }
 
@@ -394,11 +448,9 @@ const HTML = `<!DOCTYPE html>
       const data = await res.json();
 
       if (res.ok) {
-        markSubmitted(type);
-        showDone(type === 'pay' ? "you're in. we'll be in touch." : "noted. we'll let you know.");
-      } else if (data.error === 'already_signed_up') {
-        markSubmitted(data.existing_type);
-        showDone("you're already on the list.");
+        saveEmail(email);
+        showDone(type);
+        loadCounts();
       } else if (data.error === 'invalid_email') {
         setStatus('that email looks off.', true);
         btns.forEach(b => b.disabled = false);
@@ -412,8 +464,11 @@ const HTML = `<!DOCTYPE html>
     }
   }
 
-  if (alreadySubmitted()) {
-    showDone("you're already on the list.");
+  loadCounts();
+
+  const saved = savedEmail();
+  if (saved) {
+    document.getElementById('email-input').value = saved;
   }
 </script>
 </body>

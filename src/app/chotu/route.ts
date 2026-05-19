@@ -391,7 +391,7 @@ const HTML = `<!DOCTYPE html>
   </div>
 
   <!-- headline -->
-  <h1>lives in your notch.<br>handles the <em>rest.</em></h1>
+  <h1>focus on what you love.<br>let chotu handle the <em>fluff.</em></h1>
 
   <!-- desc -->
   <p class="desc">

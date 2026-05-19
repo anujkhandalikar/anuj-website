@@ -21,12 +21,7 @@ const HTML = `<!DOCTYPE html>
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   html, body {
-    height: 100dvh;
-    overflow: hidden;
-  }
-
-  @media (max-width: 480px) {
-    html, body { height: auto; overflow: auto; }
+    min-height: 100dvh;
   }
 
   body {
@@ -48,7 +43,7 @@ const HTML = `<!DOCTYPE html>
 
   main {
     max-width: 560px;
-    height: 100dvh;
+    min-height: 100dvh;
     margin: 0 auto;
     padding: 48px 40px;
     display: flex;
@@ -351,10 +346,72 @@ const HTML = `<!DOCTYPE html>
     opacity: 0.5;
   }
 
+  /* ---- FAQ ---- */
+  .faq {
+    max-width: 560px;
+    margin: 0 auto;
+    padding: 8px 40px 96px;
+  }
+
+  .faq-title {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+    color: var(--dim);
+    margin-bottom: 8px;
+  }
+
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .faq-item {
+    border-top: 1px solid var(--border);
+    padding: 18px 0;
+  }
+
+  .faq-item:last-of-type {
+    border-bottom: 1px solid var(--border);
+  }
+
+  .faq-item summary {
+    list-style: none;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: -0.2px;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .faq-item summary::-webkit-details-marker { display: none; }
+
+  .faq-icon {
+    flex-shrink: 0;
+    color: var(--dim);
+    transition: transform 0.2s ease;
+  }
+
+  .faq-item[open] .faq-icon {
+    transform: rotate(45deg);
+    color: var(--text);
+  }
+
+  .faq-item .faq-body {
+    margin-top: 12px;
+    font-size: 13.5px;
+    color: var(--dim);
+    line-height: 1.65;
+    letter-spacing: -0.1px;
+  }
+
   @media (max-width: 480px) {
     main {
-      height: auto;
-      min-height: 100dvh;
       justify-content: flex-start;
       padding: 40px 24px 56px;
       gap: 24px;
@@ -363,6 +420,8 @@ const HTML = `<!DOCTYPE html>
     .email-input { max-width: 100%; }
     h1 { font-size: clamp(30px, 9vw, 40px); }
     .cap-item { padding: 0 14px; font-size: 12.5px; }
+    .faq { padding: 0 24px 72px; }
+    .faq-item summary { font-size: 14.5px; }
     .modal { padding: 16px; }
     .modal-close {
       top: 8px;
@@ -391,7 +450,7 @@ const HTML = `<!DOCTYPE html>
   </div>
 
   <!-- headline -->
-  <h1>focus on what you love.<br>let chotu handle the <em>fluff.</em></h1>
+  <h1>stay in flow.<br>chotu handles the <em>noise.</em></h1>
 
   <!-- desc -->
   <p class="desc">
@@ -456,6 +515,94 @@ const HTML = `<!DOCTYPE html>
   </div>
 
 </main>
+
+<!-- faq -->
+<section class="faq" aria-label="frequently asked questions">
+  <div class="faq-title">questions</div>
+  <div class="faq-list">
+
+    <details class="faq-item">
+      <summary>
+        <span>why does chotu exist?</span>
+        <svg class="faq-icon" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 1V11M1 6H11" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+      </summary>
+      <div class="faq-body">
+        i built chotu because i kept switching between tabs and tools and losing focus. i love deep work — writing, researching, editing videos, watching films — but distractions kept pulling me out, and i had to either remember the thought for later or let it go. neither felt right. chotu takes the task in the background so the thought doesn't break the focus.
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>
+        <span>what does chotu actually do?</span>
+        <svg class="faq-icon" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 1V11M1 6H11" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+      </summary>
+      <div class="faq-body">
+        researches anything on the web (3-bullet answers), creates / reads / updates calendar events, manages google tasks, sends and reads whatsapp messages, orders groceries on blinkit. also captures stray thoughts and tags them so they don't get lost.
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>
+        <span>how do i use it?</span>
+        <svg class="faq-icon" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 1V11M1 6H11" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+      </summary>
+      <div class="faq-body">
+        global hotkey opens a small overlay. type the task (or paste an image), hit enter, go back to what you were doing. chotu classifies, runs it in the background, and drops the result on a web dashboard for async review.
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>
+        <span>who is it for?</span>
+        <svg class="faq-icon" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 1V11M1 6H11" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+      </summary>
+      <div class="faq-body">
+        right now, just me. v1 is a validation build — one builder, one user. i'm certain personal chotus will exist for everyone eventually, but nothing today feels seamless enough to actually protect focus. if others find it valuable, i'll build it for them too.
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>
+        <span>does anything need my approval?</span>
+        <svg class="faq-icon" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 1V11M1 6H11" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+      </summary>
+      <div class="faq-body">
+        anything irreversible or sent on your behalf: whatsapp messages, calendar updates and deletes, blinkit orders. these wait for one click on the dashboard. reads, research, and calendar/task creation run on their own.
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>
+        <span>what's it built on?</span>
+        <svg class="faq-icon" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 1V11M1 6H11" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+      </summary>
+      <div class="faq-body">
+        next.js + tailwind on vercel, supabase for storage and real-time, inngest for background jobs, openai (gpt-4o-mini for routing, gpt-4o + web search for research), electron for the desktop overlay. typescript everywhere.
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>
+        <span>what doesn't it do yet?</span>
+        <svg class="faq-icon" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 1V11M1 6H11" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+      </summary>
+      <div class="faq-body">
+        no native mobile app, no email, no payments, no purchases beyond blinkit, no voice capture, no scheduled briefings, no multi-user, no memory across tasks, no follow-up questions — the overlay is one-shot.
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>
+        <span>can i try it?</span>
+        <svg class="faq-icon" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 1V11M1 6H11" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+      </summary>
+      <div class="faq-body">
+        not yet. drop your email above — if enough people want one, i'll build it for them.
+      </div>
+    </details>
+
+  </div>
+</section>
 
 <!-- demo modal -->
 <div class="modal" id="demo-modal" onclick="closeDemo()" role="dialog" aria-modal="true" aria-label="Demo video">

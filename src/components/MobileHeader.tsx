@@ -8,6 +8,7 @@ import { SidebarPage } from "@/lib/db";
 import ThemeToggle from "./ThemeToggle";
 import { useEdit } from "@/lib/EditContext";
 import LoginModal from "@/components/Auth/LoginModal";
+import { track } from "@/lib/analytics";
 
 interface MobileHeaderProps {
     pages: SidebarPage[];
@@ -119,7 +120,10 @@ export default function MobileHeader({ pages }: MobileHeaderProps) {
                             <Link
                                 key={page.slug}
                                 href={page.slug === 'about' ? '/' : `/${page.slug}`}
-                                onClick={() => setIsOpen(false)}
+                                onClick={() => {
+                                    track("nav_click", { section: "mobile_menu", slug: page.slug });
+                                    setIsOpen(false);
+                                }}
                                 className="px-4 py-2.5 text-[14px] text-[var(--notes-text-muted)] hover:bg-[var(--notes-hover)] hover:text-[var(--notes-link)] transition-colors"
                             >
                                 {page.title}

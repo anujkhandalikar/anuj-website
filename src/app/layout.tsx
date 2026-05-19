@@ -3,6 +3,7 @@ import "./globals.css";
 import { EditProvider } from "@/lib/EditContext";
 import EditModeToggle from "@/components/Editor/EditModeToggle";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
+import OutboundLinkTracker from "@/components/OutboundLinkTracker";
 import Sidebar from "@/components/Sidebar";
 import MobileHeader from "@/components/MobileHeader";
 import ClientLogin from "@/components/Auth/ClientLogin";
@@ -74,6 +75,7 @@ export default async function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body>
         <GoogleAnalytics gaId="G-LYFZ95RMBS" />
+        <OutboundLinkTracker />
         <ThemeProvider>
           <EditProvider>
             <div className="min-h-dvh flex bg-[var(--notes-bg)]">

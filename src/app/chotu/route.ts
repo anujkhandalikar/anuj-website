@@ -6,6 +6,18 @@ const HTML = `<!DOCTYPE html>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>chotu — always present, never in the way</title>
+<!-- Google Analytics (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-LYFZ95RMBS"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-LYFZ95RMBS', { page_section: 'chotu' });
+  window.gtag = gtag;
+  window.track = function(event, params){
+    try { gtag('event', event, Object.assign({ page_section: 'chotu' }, params || {})); } catch(e) {}
+  };
+</script>
 <style>
   :root {
     --bg: #0c0c0c;
@@ -145,6 +157,30 @@ const HTML = `<!DOCTYPE html>
   .sticky-note strong {
     font-weight: 700;
     color: #1a1200;
+  }
+
+  .sticky-note p + p {
+    margin-top: 10px;
+  }
+
+  .sticky-sig {
+    font-size: 13px;
+    color: #5a4300;
+  }
+
+  .sticky-sig .heart {
+    color: #b91c1c;
+  }
+
+  .sticky-sig a {
+    color: #3a2c00;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(58,44,0,0.4);
+    transition: border-color 0.15s;
+  }
+
+  .sticky-sig a:hover {
+    border-bottom-color: #3a2c00;
   }
 
   .sticky-tape {
@@ -398,8 +434,10 @@ const HTML = `<!DOCTYPE html>
 
   /* ---- FAQ ---- */
   .faq {
+    position: relative;
+    z-index: 1;
     max-width: 560px;
-    margin: 0 auto;
+    margin: clamp(-220px, -14vh, -60px) auto 0;
     padding: 8px 40px 96px;
   }
 
@@ -460,34 +498,6 @@ const HTML = `<!DOCTYPE html>
     letter-spacing: -0.1px;
   }
 
-  /* ---- FOOTER ---- */
-  .site-footer {
-    max-width: 560px;
-    margin: 0 auto;
-    padding: 0 40px 40px;
-    font-size: 11px;
-    color: var(--dimmer);
-    letter-spacing: -0.1px;
-    text-align: center;
-  }
-
-  .site-footer a {
-    color: var(--dim);
-    text-decoration: none;
-    border-bottom: 1px solid var(--border);
-    transition: color 0.15s, border-color 0.15s;
-  }
-
-  .site-footer a:hover {
-    color: var(--text);
-    border-bottom-color: rgba(255,255,255,0.25);
-  }
-
-  .site-footer .heart {
-    color: var(--red);
-    opacity: 0.85;
-  }
-
   @media (max-width: 480px) {
     main {
       justify-content: flex-start;
@@ -499,7 +509,7 @@ const HTML = `<!DOCTYPE html>
     h1 { font-size: clamp(30px, 9vw, 40px); }
     .sticky-note { font-size: 15px; max-width: 260px; }
     .cap-item { padding: 0 14px; font-size: 12.5px; }
-    .faq { padding: 0 24px 72px; }
+    .faq { margin-top: 0; padding: 0 24px 72px; }
     .faq-item summary { font-size: 14.5px; }
     .modal { padding: 16px; }
     .modal-close {
@@ -531,24 +541,20 @@ const HTML = `<!DOCTYPE html>
   <!-- headline -->
   <h1>stay in flow.<br>chotu handles the <em>noise.</em></h1>
 
-  <!-- desc -->
-  <p class="desc">
-    open your phone for one thing, end up doing five. chotu takes the task. you stay focused.
-  </p>
-
-  <!-- ps sticky note -->
-  <aside class="sticky-note" aria-label="note from anuj">
-    <div class="sticky-tape" aria-hidden="true"></div>
-    <p><strong>ps —</strong> only mine for now. <strong>20 buyers</strong> = i build for everyone.</p>
-  </aside>
-
-  <!-- demo trigger -->
-  <button class="demo-trigger" onclick="openDemo()" aria-label="See why chotu">
+  <!-- demo trigger (in place of subheadline) -->
+  <button class="demo-trigger" onclick="window.track && window.track('chotu_see_why_click'); openDemo();" aria-label="See why chotu">
     <svg class="demo-icon" width="9" height="11" viewBox="0 0 9 11" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M0.75 0.75L8.25 5.5L0.75 10.25V0.75Z" fill="currentColor"/>
     </svg>
     <span>see why</span>
   </button>
+
+  <!-- ps sticky note -->
+  <aside class="sticky-note" aria-label="note from anuj">
+    <div class="sticky-tape" aria-hidden="true"></div>
+    <p><strong>ps —</strong> only mine for now. <strong>20 buyers</strong> = i build for everyone.</p>
+    <p class="sticky-sig">built with <span class="heart">♥</span> by <a href="https://anujk.in" target="_blank" rel="noopener noreferrer">anuj</a></p>
+  </aside>
 
   <!-- capabilities -->
   <div class="capabilities" aria-label="what chotu can do">
@@ -595,7 +601,7 @@ const HTML = `<!DOCTYPE html>
 
     <div id="cta-done" style="display:none">
       <div class="done-msg" id="done-msg"></div>
-      <button class="change-btn" onclick="showForm()">change my mind</button>
+      <button class="change-btn" onclick="window.track && window.track('chotu_change_mind'); showForm();">change my mind</button>
     </div>
   </div>
 
@@ -689,11 +695,6 @@ const HTML = `<!DOCTYPE html>
   </div>
 </section>
 
-<!-- footer -->
-<footer class="site-footer">
-  built with <span class="heart">♥</span> by <a href="https://anujk.in" target="_blank" rel="noopener noreferrer">anuj</a>
-</footer>
-
 <!-- demo modal -->
 <div class="modal" id="demo-modal" onclick="closeDemo()" role="dialog" aria-modal="true" aria-label="Demo video">
   <div class="modal-inner" onclick="event.stopPropagation()">
@@ -754,7 +755,12 @@ const HTML = `<!DOCTYPE html>
 
   async function submit(type) {
     const email = document.getElementById('email-input').value.trim();
-    if (!email) { setStatus('enter your email first.', true); return; }
+    window.track && window.track('chotu_signup_submit', { type, has_email: !!email });
+    if (!email) {
+      setStatus('enter your email first.', true);
+      window.track && window.track('chotu_signup_error', { type, reason: 'no_email' });
+      return;
+    }
 
     const btns = document.querySelectorAll('.btn');
     btns.forEach(b => b.disabled = true);
@@ -772,16 +778,20 @@ const HTML = `<!DOCTYPE html>
         saveEmail(email);
         showDone(type);
         loadCounts();
+        window.track && window.track('chotu_signup_success', { type });
       } else if (data.error === 'invalid_email') {
         setStatus('that email looks off.', true);
         btns.forEach(b => b.disabled = false);
+        window.track && window.track('chotu_signup_error', { type, reason: 'invalid_email' });
       } else {
         setStatus('something went wrong. try again.', true);
         btns.forEach(b => b.disabled = false);
+        window.track && window.track('chotu_signup_error', { type, reason: 'server_error' });
       }
     } catch(e) {
       setStatus('something went wrong. try again.', true);
       btns.forEach(b => b.disabled = false);
+      window.track && window.track('chotu_signup_error', { type, reason: 'network' });
     }
   }
 
@@ -799,6 +809,7 @@ const HTML = `<!DOCTYPE html>
     mount.innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/pKvnko42WN8?autoplay=1&rel=0&modestbranding=1" title="chotu demo" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
     modal.classList.add('open');
     document.body.style.overflow = 'hidden';
+    window.track && window.track('chotu_demo_opened');
   }
 
   function closeDemo() {
@@ -807,6 +818,7 @@ const HTML = `<!DOCTYPE html>
     modal.classList.remove('open');
     mount.innerHTML = '';
     document.body.style.overflow = '';
+    window.track && window.track('chotu_demo_closed');
   }
 
   window.openDemo = openDemo;
@@ -817,6 +829,17 @@ const HTML = `<!DOCTYPE html>
       const modal = document.getElementById('demo-modal');
       if (modal && modal.classList.contains('open')) closeDemo();
     }
+  });
+
+  // ---- faq open tracking ----
+  document.querySelectorAll('.faq-item').forEach((item) => {
+    item.addEventListener('toggle', () => {
+      if (item.open) {
+        const q = item.querySelector('summary span');
+        const question = q ? q.textContent.trim() : '';
+        window.track && window.track('chotu_faq_open', { question });
+      }
+    });
   });
 </script>
 </body>

@@ -6,6 +6,7 @@ import SidebarAddButton from "@/components/SidebarAddButton";
 import ThemeToggle from "@/components/ThemeToggle";
 import { SidebarPage } from "@/lib/db";
 import { usePathname } from "next/navigation";
+import { track } from "@/lib/analytics";
 
 interface SidebarProps {
     pages: SidebarPage[];
@@ -42,7 +43,11 @@ export default function Sidebar({ pages, isAuthenticated }: SidebarProps) {
         >
             {/* Logo */}
             <div className="px-3 pb-2 w-full">
-                <Link href="/" className="flex items-center gap-2 px-1 hover:opacity-80 transition-opacity w-full">
+                <Link
+                    href="/"
+                    onClick={() => track("nav_click", { section: "logo", slug: "home" })}
+                    className="flex items-center gap-2 px-1 hover:opacity-80 transition-opacity w-full"
+                >
                     <Image src="/apple-notes-logo.webp" alt="Anuj World" width={28} height={28} className="rounded-md" />
                     <span className="text-sm font-medium text-[var(--notes-text)]">anuj's home</span>
                 </Link>
@@ -68,6 +73,7 @@ export default function Sidebar({ pages, isAuthenticated }: SidebarProps) {
                             <Link
                                 key={page.slug}
                                 href="/"
+                                onClick={() => track("nav_click", { section: "pinned", slug: page.slug })}
                                 className={`block w-full p-2 rounded-md mb-0.5 transition-colors group ${isActive(page.slug) ? 'bg-[var(--notes-sidebar-hover)]' : 'hover:bg-[var(--notes-sidebar-hover)]'}`}
                             >
                                 <div className="flex items-center gap-2 mb-1 w-full min-w-0">
@@ -99,6 +105,7 @@ export default function Sidebar({ pages, isAuthenticated }: SidebarProps) {
                         <Link
                             key={page.slug}
                             href={`/${page.slug}`}
+                            onClick={() => track("nav_click", { section: "pages", slug: page.slug })}
                             className={`block w-full p-2 rounded-md mb-0.5 transition-colors group ${isActive(page.slug) ? 'bg-[var(--notes-sidebar-hover)]' : 'hover:bg-[var(--notes-sidebar-hover)]'}`}
                         >
                             <div className="flex items-center gap-2 mb-1 w-full min-w-0 max-w-none">

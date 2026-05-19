@@ -327,23 +327,23 @@ const HTML = `<!DOCTYPE html>
     <div class="tasks">
       <div class="task">
         <span class="task-icon">🛒</span>
-        <span class="task-text"><strong>order groceries</strong> — "get the usual from blinkit"</span>
+        <span class="task-text"><strong>order groceries</strong></span>
       </div>
       <div class="task">
         <span class="task-icon">💬</span>
-        <span class="task-text"><strong>manage whatsapp</strong> — drafts replies, summarises threads</span>
+        <span class="task-text"><strong>manage whatsapp</strong></span>
       </div>
       <div class="task">
         <span class="task-icon">🔍</span>
-        <span class="task-text"><strong>research anything</strong> — no new tabs, no rabbit holes</span>
+        <span class="task-text"><strong>research anything</strong></span>
       </div>
       <div class="task">
         <span class="task-icon">✅</span>
-        <span class="task-text"><strong>approve & move on</strong> — one tap dashboard when you need control</span>
+        <span class="task-text"><strong>approve & move on</strong></span>
       </div>
       <div class="task">
         <span class="task-icon">🔕</span>
-        <span class="task-text"><strong>protect your focus</strong> — always present, never a distraction</span>
+        <span class="task-text"><strong>protect your focus</strong></span>
       </div>
       <div class="task task-more">
         <span class="task-text">and a lot more...</span>

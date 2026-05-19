@@ -115,6 +115,100 @@ const HTML = `<!DOCTYPE html>
     max-width: 440px;
   }
 
+  /* ---- DEMO TRIGGER ---- */
+  .demo-trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    width: fit-content;
+    padding: 9px 16px 9px 14px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: rgba(255,255,255,0.04);
+    color: var(--text);
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: -0.1px;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s, transform 0.15s;
+  }
+
+  .demo-trigger:hover {
+    background: rgba(255,255,255,0.07);
+    border-color: rgba(255,255,255,0.14);
+  }
+
+  .demo-trigger:active { transform: scale(0.98); }
+  .demo-icon { opacity: 0.7; flex-shrink: 0; }
+  .demo-trigger:hover .demo-icon { opacity: 1; }
+
+  /* ---- MODAL ---- */
+  .modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.82);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  .modal.open {
+    display: flex;
+    opacity: 1;
+  }
+
+  .modal-inner {
+    position: relative;
+    width: 100%;
+    max-width: 960px;
+    aspect-ratio: 16 / 9;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #000;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+  }
+
+  .modal-close {
+    position: absolute;
+    top: -42px;
+    right: -2px;
+    width: 32px;
+    height: 32px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    color: var(--text);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s, border-color 0.15s;
+  }
+
+  .modal-close:hover {
+    background: rgba(255,255,255,0.12);
+    border-color: rgba(255,255,255,0.18);
+  }
+
+  .modal-video {
+    width: 100%;
+    height: 100%;
+  }
+
+  .modal-video iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+  }
+
   /* ---- CAPABILITIES ---- */
   .capabilities {
     font-size: 13px;
@@ -246,6 +340,14 @@ const HTML = `<!DOCTYPE html>
     h1 { font-size: clamp(30px, 9vw, 40px); }
     .capabilities { line-height: 2; }
     .capabilities .cap-sep { margin: 0 6px; }
+    .modal { padding: 16px; }
+    .modal-close {
+      top: 8px;
+      right: 8px;
+      background: rgba(0,0,0,0.6);
+      border-color: rgba(255,255,255,0.2);
+      z-index: 2;
+    }
   }
 </style>
 </head>
@@ -272,6 +374,14 @@ const HTML = `<!DOCTYPE html>
   <p class="desc">
     open your phone for one thing, end up doing five. chotu takes the task — you stay in your world.
   </p>
+
+  <!-- demo trigger -->
+  <button class="demo-trigger" onclick="openDemo()" aria-label="Watch the demo video">
+    <svg class="demo-icon" width="9" height="11" viewBox="0 0 9 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0.75 0.75L8.25 5.5L0.75 10.25V0.75Z" fill="currentColor"/>
+    </svg>
+    <span>watch the demo</span>
+  </button>
 
   <!-- capabilities -->
   <p class="capabilities">
@@ -312,6 +422,18 @@ const HTML = `<!DOCTYPE html>
   </div>
 
 </main>
+
+<!-- demo modal -->
+<div class="modal" id="demo-modal" onclick="closeDemo()" role="dialog" aria-modal="true" aria-label="Demo video">
+  <div class="modal-inner" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeDemo()" aria-label="Close">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M1 1L13 13M13 1L1 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </button>
+    <div class="modal-video" id="demo-video-mount"></div>
+  </div>
+</div>
 
 <script>
   const STORAGE_KEY = 'chotu_email';
@@ -398,6 +520,33 @@ const HTML = `<!DOCTYPE html>
   if (saved) {
     document.getElementById('email-input').value = saved;
   }
+
+  // ---- demo modal ----
+  function openDemo() {
+    const modal = document.getElementById('demo-modal');
+    const mount = document.getElementById('demo-video-mount');
+    mount.innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/pKvnko42WN8?autoplay=1&rel=0&modestbranding=1" title="chotu demo" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeDemo() {
+    const modal = document.getElementById('demo-modal');
+    const mount = document.getElementById('demo-video-mount');
+    modal.classList.remove('open');
+    mount.innerHTML = '';
+    document.body.style.overflow = '';
+  }
+
+  window.openDemo = openDemo;
+  window.closeDemo = closeDemo;
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      const modal = document.getElementById('demo-modal');
+      if (modal && modal.classList.contains('open')) closeDemo();
+    }
+  });
 </script>
 </body>
 </html>`;

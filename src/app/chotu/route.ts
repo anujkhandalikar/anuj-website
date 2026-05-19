@@ -42,6 +42,7 @@ const HTML = `<!DOCTYPE html>
   }
 
   main {
+    position: relative;
     max-width: 560px;
     min-height: 100dvh;
     margin: 0 auto;
@@ -108,6 +109,55 @@ const HTML = `<!DOCTYPE html>
     line-height: 1.6;
     letter-spacing: -0.1px;
     max-width: 440px;
+  }
+
+  /* ---- STICKY NOTE ---- */
+  .sticky-note {
+    position: absolute;
+    top: 50%;
+    right: -260px;
+    width: 220px;
+    padding: 18px 18px 16px;
+    background: #fde68a;
+    color: #3a2c00;
+    font-family: 'Bradley Hand', 'Marker Felt', 'Segoe Print', 'Comic Sans MS', cursive;
+    font-size: 16px;
+    line-height: 1.4;
+    letter-spacing: 0.1px;
+    transform: translateY(-50%) rotate(3.5deg);
+    box-shadow:
+      0 1px 1px rgba(0,0,0,0.18),
+      0 14px 28px -10px rgba(0,0,0,0.55);
+    border-radius: 2px;
+  }
+
+  @media (max-width: 980px) {
+    .sticky-note {
+      position: static;
+      width: fit-content;
+      max-width: 280px;
+      transform: rotate(-1.8deg);
+      margin-top: -8px;
+      align-self: flex-start;
+    }
+  }
+
+  .sticky-note strong {
+    font-weight: 700;
+    color: #1a1200;
+  }
+
+  .sticky-tape {
+    position: absolute;
+    top: -9px;
+    left: 50%;
+    transform: translateX(-50%) rotate(-2deg);
+    width: 60px;
+    height: 16px;
+    background: rgba(255,255,255,0.4);
+    border-left: 1px dashed rgba(255,255,255,0.55);
+    border-right: 1px dashed rgba(255,255,255,0.55);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.12);
   }
 
   /* ---- DEMO TRIGGER ---- */
@@ -410,6 +460,34 @@ const HTML = `<!DOCTYPE html>
     letter-spacing: -0.1px;
   }
 
+  /* ---- FOOTER ---- */
+  .site-footer {
+    max-width: 560px;
+    margin: 0 auto;
+    padding: 0 40px 40px;
+    font-size: 11px;
+    color: var(--dimmer);
+    letter-spacing: -0.1px;
+    text-align: center;
+  }
+
+  .site-footer a {
+    color: var(--dim);
+    text-decoration: none;
+    border-bottom: 1px solid var(--border);
+    transition: color 0.15s, border-color 0.15s;
+  }
+
+  .site-footer a:hover {
+    color: var(--text);
+    border-bottom-color: rgba(255,255,255,0.25);
+  }
+
+  .site-footer .heart {
+    color: var(--red);
+    opacity: 0.85;
+  }
+
   @media (max-width: 480px) {
     main {
       justify-content: flex-start;
@@ -419,6 +497,7 @@ const HTML = `<!DOCTYPE html>
     .cta-stack { max-width: 100%; }
     .email-input { max-width: 100%; }
     h1 { font-size: clamp(30px, 9vw, 40px); }
+    .sticky-note { font-size: 15px; max-width: 260px; }
     .cap-item { padding: 0 14px; font-size: 12.5px; }
     .faq { padding: 0 24px 72px; }
     .faq-item summary { font-size: 14.5px; }
@@ -454,8 +533,14 @@ const HTML = `<!DOCTYPE html>
 
   <!-- desc -->
   <p class="desc">
-    open your phone for one thing, end up doing five. chotu takes the task — you stay in your world.
+    open your phone for one thing, end up doing five. chotu takes the task. you stay focused.
   </p>
+
+  <!-- ps sticky note -->
+  <aside class="sticky-note" aria-label="note from anuj">
+    <div class="sticky-tape" aria-hidden="true"></div>
+    <p><strong>ps —</strong> only mine for now. <strong>20 buyers</strong> = i build for everyone.</p>
+  </aside>
 
   <!-- demo trigger -->
   <button class="demo-trigger" onclick="openDemo()" aria-label="See why chotu">
@@ -527,7 +612,7 @@ const HTML = `<!DOCTYPE html>
         <svg class="faq-icon" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 1V11M1 6H11" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
       </summary>
       <div class="faq-body">
-        i built chotu because i kept switching between tabs and tools and losing focus. i love deep work — writing, researching, editing videos, watching films — but distractions kept pulling me out, and i had to either remember the thought for later or let it go. neither felt right. chotu takes the task in the background so the thought doesn't break the focus.
+        i kept switching tabs and losing focus on the work i love — writing, research, editing, films. distractions had to be remembered or let go. neither felt right. chotu takes the task in the background so the thought doesn't break the focus.
       </div>
     </details>
 
@@ -537,7 +622,7 @@ const HTML = `<!DOCTYPE html>
         <svg class="faq-icon" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 1V11M1 6H11" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
       </summary>
       <div class="faq-body">
-        researches anything on the web (3-bullet answers), creates / reads / updates calendar events, manages google tasks, sends and reads whatsapp messages, orders groceries on blinkit. also captures stray thoughts and tags them so they don't get lost.
+        researches the web (3-bullet answers), runs your calendar and tasks, sends and reads whatsapp, orders groceries on blinkit. also captures stray thoughts so they don't get lost.
       </div>
     </details>
 
@@ -547,7 +632,7 @@ const HTML = `<!DOCTYPE html>
         <svg class="faq-icon" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 1V11M1 6H11" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
       </summary>
       <div class="faq-body">
-        global hotkey opens a small overlay. type the task (or paste an image), hit enter, go back to what you were doing. chotu classifies, runs it in the background, and drops the result on a web dashboard for async review.
+        hotkey opens an overlay. type the task, hit enter, go back to work. chotu runs it in the background and drops the result on a dashboard for async review.
       </div>
     </details>
 
@@ -557,7 +642,7 @@ const HTML = `<!DOCTYPE html>
         <svg class="faq-icon" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 1V11M1 6H11" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
       </summary>
       <div class="faq-body">
-        right now, just me. v1 is a validation build — one builder, one user. i'm certain personal chotus will exist for everyone eventually, but nothing today feels seamless enough to actually protect focus. if others find it valuable, i'll build it for them too.
+        right now, just me. v1 is one builder, one user. nothing out there feels seamless enough to protect focus — if others want one, i'll build it for them too.
       </div>
     </details>
 
@@ -567,7 +652,7 @@ const HTML = `<!DOCTYPE html>
         <svg class="faq-icon" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 1V11M1 6H11" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
       </summary>
       <div class="faq-body">
-        anything irreversible or sent on your behalf: whatsapp messages, calendar updates and deletes, blinkit orders. these wait for one click on the dashboard. reads, research, and calendar/task creation run on their own.
+        anything irreversible: whatsapp sends, calendar edits, blinkit orders. one click on the dashboard. reads, research, and event creation run on their own.
       </div>
     </details>
 
@@ -577,7 +662,7 @@ const HTML = `<!DOCTYPE html>
         <svg class="faq-icon" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 1V11M1 6H11" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
       </summary>
       <div class="faq-body">
-        next.js + tailwind on vercel, supabase for storage and real-time, inngest for background jobs, openai (gpt-4o-mini for routing, gpt-4o + web search for research), electron for the desktop overlay. typescript everywhere.
+        next.js + tailwind, supabase, inngest, openai (gpt-4o-mini + gpt-4o w/ web search), electron for the overlay. typescript everywhere.
       </div>
     </details>
 
@@ -587,7 +672,7 @@ const HTML = `<!DOCTYPE html>
         <svg class="faq-icon" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 1V11M1 6H11" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
       </summary>
       <div class="faq-body">
-        no native mobile app, no email, no payments, no purchases beyond blinkit, no voice capture, no scheduled briefings, no multi-user, no memory across tasks, no follow-up questions — the overlay is one-shot.
+        no native mobile app, no email, no payments, no voice, no briefings, no multi-user, no cross-task memory, no follow-ups — overlay is one-shot.
       </div>
     </details>
 
@@ -597,12 +682,17 @@ const HTML = `<!DOCTYPE html>
         <svg class="faq-icon" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 1V11M1 6H11" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
       </summary>
       <div class="faq-body">
-        not yet. drop your email above — if enough people want one, i'll build it for them.
+        not yet. drop your email above — if enough want one, i'll build it.
       </div>
     </details>
 
   </div>
 </section>
+
+<!-- footer -->
+<footer class="site-footer">
+  built with <span class="heart">♥</span> by <a href="https://anujk.in" target="_blank" rel="noopener noreferrer">anuj</a>
+</footer>
 
 <!-- demo modal -->
 <div class="modal" id="demo-modal" onclick="closeDemo()" role="dialog" aria-modal="true" aria-label="Demo video">

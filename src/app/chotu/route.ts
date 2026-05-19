@@ -211,21 +211,45 @@ const HTML = `<!DOCTYPE html>
 
   /* ---- CAPABILITIES ---- */
   .capabilities {
+    overflow: hidden;
+    width: 100%;
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+    mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+  }
+
+  .cap-track {
+    display: flex;
+    width: max-content;
+    animation: cap-scroll 14s linear infinite;
+  }
+
+  .cap-track:hover { animation-play-state: paused; }
+
+  .cap-item {
     font-size: 13px;
     color: var(--text);
-    line-height: 1.9;
     letter-spacing: -0.1px;
     font-weight: 500;
+    padding: 0 18px;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
   }
 
-  .capabilities .cap-sep {
-    color: var(--dimmer);
-    margin: 0 10px;
+  .cap-emoji {
+    font-size: 14px;
+    line-height: 1;
   }
 
-  .capabilities .cap-more {
-    color: var(--dimmer);
-    font-weight: 400;
+  @keyframes cap-scroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cap-track { animation: none; }
   }
 
   /* ---- CTA ---- */
@@ -338,8 +362,7 @@ const HTML = `<!DOCTYPE html>
     .cta-stack { max-width: 100%; }
     .email-input { max-width: 100%; }
     h1 { font-size: clamp(30px, 9vw, 40px); }
-    .capabilities { line-height: 2; }
-    .capabilities .cap-sep { margin: 0 6px; }
+    .cap-item { padding: 0 14px; font-size: 12.5px; }
     .modal { padding: 16px; }
     .modal-close {
       top: 8px;
@@ -376,17 +399,28 @@ const HTML = `<!DOCTYPE html>
   </p>
 
   <!-- demo trigger -->
-  <button class="demo-trigger" onclick="openDemo()" aria-label="Watch the demo video">
+  <button class="demo-trigger" onclick="openDemo()" aria-label="See why chotu">
     <svg class="demo-icon" width="9" height="11" viewBox="0 0 9 11" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M0.75 0.75L8.25 5.5L0.75 10.25V0.75Z" fill="currentColor"/>
     </svg>
-    <span>watch the demo</span>
+    <span>see why</span>
   </button>
 
   <!-- capabilities -->
-  <p class="capabilities">
-    <span>orders groceries</span><span class="cap-sep">·</span><span>manages whatsapp</span><span class="cap-sep">·</span><span>researches anything</span><span class="cap-sep">·</span><span>handles approvals</span><span class="cap-sep">·</span><span>protects your focus</span><span class="cap-more"> &nbsp;and a lot more.</span>
-  </p>
+  <div class="capabilities" aria-label="what chotu can do">
+    <div class="cap-track" id="cap-track">
+      <span class="cap-item"><span class="cap-emoji">🛒</span>orders groceries</span>
+      <span class="cap-item"><span class="cap-emoji">💬</span>manages whatsapp</span>
+      <span class="cap-item"><span class="cap-emoji">🔎</span>researches anything</span>
+      <span class="cap-item"><span class="cap-emoji">✅</span>handles approvals</span>
+      <span class="cap-item"><span class="cap-emoji">🧘</span>protects your focus</span>
+      <span class="cap-item" aria-hidden="true"><span class="cap-emoji">🛒</span>orders groceries</span>
+      <span class="cap-item" aria-hidden="true"><span class="cap-emoji">💬</span>manages whatsapp</span>
+      <span class="cap-item" aria-hidden="true"><span class="cap-emoji">🔎</span>researches anything</span>
+      <span class="cap-item" aria-hidden="true"><span class="cap-emoji">✅</span>handles approvals</span>
+      <span class="cap-item" aria-hidden="true"><span class="cap-emoji">🧘</span>protects your focus</span>
+    </div>
+  </div>
 
   <!-- cta -->
   <div class="cta-wrap">

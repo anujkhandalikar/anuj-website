@@ -25,6 +25,10 @@ const HTML = `<!DOCTYPE html>
     overflow: hidden;
   }
 
+  @media (max-width: 480px) {
+    html, body { height: auto; overflow: auto; }
+  }
+
   body {
     background: var(--bg);
     color: var(--text);
@@ -282,9 +286,14 @@ const HTML = `<!DOCTYPE html>
   }
 
   @media (max-width: 480px) {
-    main { padding: 28px 22px 24px; gap: 16px; }
+    main { padding: 32px 22px 40px; gap: 20px; }
     .cta-stack { max-width: 100%; }
-    h1 { letter-spacing: -2px; }
+    .email-input { max-width: 100%; }
+    h1 { font-size: clamp(28px, 8vw, 38px); letter-spacing: -1px; line-height: 1.08; }
+    .desc { font-size: 14px; line-height: 1.7; letter-spacing: 0px; }
+    .task { padding: 11px 16px; }
+    .task-text { font-size: 14px; line-height: 1.5; letter-spacing: 0px; }
+    .btn { font-size: 14px; padding: 13px 16px; }
   }
 </style>
 </head>

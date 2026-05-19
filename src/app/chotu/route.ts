@@ -549,13 +549,6 @@ const HTML = `<!DOCTYPE html>
     <span>see why</span>
   </button>
 
-  <!-- ps sticky note -->
-  <aside class="sticky-note" aria-label="note from anuj">
-    <div class="sticky-tape" aria-hidden="true"></div>
-    <p><strong>ps —</strong> only mine for now. <strong>20 buyers</strong> = i build for everyone.</p>
-    <p class="sticky-sig">built with <span class="heart">♥</span> by <a href="https://anujk.in" target="_blank" rel="noopener noreferrer">anuj</a></p>
-  </aside>
-
   <!-- capabilities -->
   <div class="capabilities" aria-label="what chotu can do">
     <div class="cap-track" id="cap-track">
@@ -604,6 +597,13 @@ const HTML = `<!DOCTYPE html>
       <button class="change-btn" onclick="window.track && window.track('chotu_change_mind'); showForm();">change my mind</button>
     </div>
   </div>
+
+  <!-- ps sticky note -->
+  <aside class="sticky-note" aria-label="note from anuj">
+    <div class="sticky-tape" aria-hidden="true"></div>
+    <p><strong>ps —</strong> only mine for now. <strong>20 buyers</strong> = i build for everyone.</p>
+    <p class="sticky-sig">built with <span class="heart">♥</span> by <a href="https://anujk.in" target="_blank" rel="noopener noreferrer">anuj</a></p>
+  </aside>
 
 </main>
 

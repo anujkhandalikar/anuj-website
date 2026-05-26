@@ -205,15 +205,16 @@ export default function VipassanaClient({
   }
 
   return (
-    <div className="fixed inset-0 overflow-y-auto bg-zinc-950 text-zinc-100 font-[-apple-system,'SF_Pro_Text',sans-serif] [&::-webkit-scrollbar]:hidden [scrollbar-width:none]">
-      <main
-        className={`mx-auto max-w-[560px] px-6 flex flex-col ${
-          hasChatted ? "min-h-screen py-10" : "min-h-screen justify-center py-16"
-        }`}
-      >
-        <header className={`${hasChatted ? "mb-6" : "mb-8"}`}>
-          <div className="flex items-center gap-2 mb-6">
-            <div className="w-7 h-7 bg-red-500 rounded-md flex items-center justify-center">
+    <div className="fixed inset-0 bg-zinc-950 text-zinc-100 font-[-apple-system,'SF_Pro_Text',sans-serif]">
+      <div className="h-[100dvh] w-full mx-auto max-w-[560px] flex flex-col relative">
+        <main
+          className={`flex-1 flex flex-col px-6 w-full ${
+            hasChatted ? "py-6 overflow-hidden" : "justify-center py-12 overflow-y-auto"
+          }`}
+        >
+          <header className={`shrink-0 ${hasChatted ? "mb-6" : "mb-8"}`}>
+            <div className="flex items-center gap-2 mb-6">
+              <div className="w-7 h-7 bg-red-500 rounded-md flex items-center justify-center shrink-0">
               <svg
                 viewBox="0 0 16 16"
                 className="w-4 h-4 fill-white"
@@ -226,9 +227,9 @@ export default function VipassanaClient({
               </svg>
             </div>
             <span className="text-sm font-bold tracking-tight">chotu</span>
-            <span className="ml-auto text-[11px] text-zinc-500 tracking-tight">
-              {counterText(status)}
-            </span>
+              <span className="ml-auto text-[11px] text-zinc-500 tracking-tight text-right">
+                {counterText(status)}
+              </span>
           </div>
 
           {!hasChatted && (
@@ -244,11 +245,11 @@ export default function VipassanaClient({
           )}
         </header>
 
-        {hasChatted && (
-          <section
-            ref={scrollRef}
-            className="flex flex-col gap-4 flex-1 overflow-y-auto mb-4 pr-1"
-          >
+          {hasChatted && (
+            <section
+              ref={scrollRef}
+              className="flex flex-col gap-4 flex-1 overflow-y-auto mb-4 pr-1 [&::-webkit-scrollbar]:hidden [scrollbar-width:none]"
+            >
             {messages.map((m, i) => (
               <div
                 key={i}
@@ -267,18 +268,18 @@ export default function VipassanaClient({
           </section>
         )}
 
-        <section className="space-y-3">
-          <div className="relative">
-            <textarea
-              ref={inputRef}
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyDown={onKey}
-              disabled={streaming}
-              placeholder={hasChatted ? "reply…" : "ask chotu anything…"}
-              rows={hasChatted ? 1 : 2}
-              className="w-full resize-none bg-zinc-900 border border-zinc-800 rounded-2xl px-4 py-3 pr-14 text-[15px] leading-relaxed focus:outline-none focus:border-zinc-600 disabled:opacity-50 placeholder:text-zinc-600"
-              autoFocus
+          <section className="shrink-0 space-y-3">
+            <div className="relative">
+              <textarea
+                ref={inputRef}
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyDown={onKey}
+                disabled={streaming}
+                placeholder={hasChatted ? "reply…" : "ask chotu anything…"}
+                rows={hasChatted ? 1 : 2}
+                className="w-full resize-none bg-zinc-900 border border-zinc-800 rounded-2xl px-4 py-3 pr-14 text-[16px] leading-relaxed focus:outline-none focus:border-zinc-600 disabled:opacity-50 placeholder:text-zinc-600"
+                autoFocus
             />
             <button
               onClick={() => send()}
@@ -298,8 +299,8 @@ export default function VipassanaClient({
             </button>
           </div>
 
-          {!hasChatted && (
-            <div className="flex gap-2 overflow-x-auto [&::-webkit-scrollbar]:hidden [scrollbar-width:none] pb-1">
+            {!hasChatted && (
+              <div className="flex gap-2 overflow-x-auto [&::-webkit-scrollbar]:hidden [scrollbar-width:none] pb-1 -mx-6 px-6">
               {SUGGESTIONS.map((s) => (
                 <button
                   key={s.label}
@@ -340,20 +341,20 @@ export default function VipassanaClient({
               <div className="text-[11px] text-zinc-500 pt-3">
                 so anuj can follow up. both optional.
               </div>
-              <input
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                placeholder="your name"
-                className="w-full bg-zinc-900 border border-zinc-800 rounded-lg px-3 py-2 text-[13px] focus:outline-none focus:border-zinc-600"
-              />
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="your@email.com"
-                className="w-full bg-zinc-900 border border-zinc-800 rounded-lg px-3 py-2 text-[13px] focus:outline-none focus:border-zinc-600"
-              />
+                <input
+                  type="text"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="your name"
+                  className="w-full bg-zinc-900 border border-zinc-800 rounded-lg px-3 py-2.5 text-[16px] focus:outline-none focus:border-zinc-600"
+                />
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="your@email.com"
+                  className="w-full bg-zinc-900 border border-zinc-800 rounded-lg px-3 py-2.5 text-[16px] focus:outline-none focus:border-zinc-600"
+                />
               <div className="flex gap-2">
                 <button
                   onClick={saveIdentity}
@@ -370,8 +371,9 @@ export default function VipassanaClient({
               </div>
             </div>
           )}
-        </section>
-      </main>
+          </section>
+        </main>
+      </div>
     </div>
   );
 }

@@ -36,6 +36,10 @@ const SUGGESTIONS = [
   { label: "date him", prompt: "tell me about anuj — would i want to date him?" },
   { label: "work with him", prompt: "what's anuj working on? would we be a fit?" },
   { label: "just chat", prompt: "hey chotu — what's anuj been thinking about lately?" },
+  { label: "roast him", prompt: "roast anuj for me. don't hold back." },
+  { label: "schedule a meet", prompt: "i want to meet anuj when he's back. can you help set that up?" },
+  { label: "what's he like", prompt: "what kind of person is anuj? give me the real version." },
+  { label: "share something", prompt: "i just want to leave anuj a note for when he's back." },
 ];
 
 export default function VipassanaClient({
@@ -272,12 +276,12 @@ export default function VipassanaClient({
           </div>
 
           {!hasChatted && (
-            <div className="flex flex-wrap gap-2">
+            <div className="flex gap-2 overflow-x-auto [&::-webkit-scrollbar]:hidden [scrollbar-width:none] pb-1">
               {SUGGESTIONS.map((s) => (
                 <button
                   key={s.label}
                   onClick={() => pickSuggestion(s.prompt)}
-                  className="text-[12.5px] text-zinc-300 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 hover:border-zinc-700 rounded-full px-3 py-1.5 transition-colors"
+                  className="text-[12.5px] text-zinc-300 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 hover:border-zinc-700 rounded-full px-3 py-1.5 transition-colors whitespace-nowrap shrink-0"
                 >
                   {s.label}
                 </button>

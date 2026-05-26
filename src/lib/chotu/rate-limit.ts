@@ -1,6 +1,6 @@
 import { getSupabase } from "@/lib/chotu/supabase";
 
-export const MESSAGES_PER_IP_PER_DAY = Infinity; // was 20 — temporarily unlimited
+export const MESSAGES_PER_IP_PER_DAY = 25;
 
 function todayUTC(): string {
   return new Date().toISOString().slice(0, 10); // YYYY-MM-DD

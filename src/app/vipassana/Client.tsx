@@ -9,8 +9,6 @@ type Status =
 
 type Msg = { role: "user" | "assistant"; content: string };
 
-// Strip basic markdown from assistant text. Belt-and-suspenders against the
-// model occasionally using bold/italic/headers despite the prompt rule.
 function stripMarkdown(s: string): string {
   return s
     .replace(/\*\*(.+?)\*\*/g, "$1")
@@ -22,30 +20,23 @@ function stripMarkdown(s: string): string {
     .replace(/^\d+\.\s+/gm, "");
 }
 
-function CounterBanner({ status }: { status: Status }) {
+function counterText(status: Status): string {
   if (status.phase === "before") {
-    return (
-      <div className="text-sm tracking-tight text-zinc-400">
-        Anuj leaves for Vipassana in{" "}
-        <strong className="text-zinc-200">{status.days}</strong>{" "}
-        {status.days === 1 ? "day" : "days"}. Chotu is warming up.
-      </div>
-    );
+    return `anuj goes silent in ${status.days} ${status.days === 1 ? "day" : "days"}`;
   }
   if (status.phase === "during") {
-    return (
-      <div className="text-sm tracking-tight text-zinc-400">
-        Day <strong className="text-zinc-200">{status.days}</strong> of{" "}
-        {status.total}. Anuj returns 8 June 2026. Chotu's holding the fort.
-      </div>
-    );
+    const left = status.total - status.days;
+    if (left <= 0) return `anuj returns tomorrow`;
+    return `${left} ${left === 1 ? "day" : "days"} of silence left`;
   }
-  return (
-    <div className="text-sm tracking-tight text-zinc-400">
-      Anuj is back. He'll be in touch.
-    </div>
-  );
+  return `anuj is back`;
 }
+
+const SUGGESTIONS = [
+  { label: "date him", prompt: "tell me about anuj — would i want to date him?" },
+  { label: "work with him", prompt: "what's anuj working on? would we be a fit?" },
+  { label: "just chat", prompt: "hey chotu — what's anuj been thinking about lately?" },
+];
 
 export default function VipassanaClient({
   status,
@@ -53,15 +44,19 @@ export default function VipassanaClient({
   status: Status;
   returnDateISO: string;
 }) {
-  const [stage, setStage] = useState<"intro" | "chat">("intro");
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
   const [conversationId, setConversationId] = useState<string | null>(null);
   const [messages, setMessages] = useState<Msg[]>([]);
   const [input, setInput] = useState("");
   const [streaming, setStreaming] = useState(false);
   const [error, setError] = useState("");
+  const [showIdentify, setShowIdentify] = useState(false);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [identitySaved, setIdentitySaved] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLTextAreaElement>(null);
+
+  const hasChatted = messages.length > 0;
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -69,8 +64,8 @@ export default function VipassanaClient({
     }
   }, [messages, streaming]);
 
-  async function startSession() {
-    setError("");
+  async function ensureSession(): Promise<string | null> {
+    if (conversationId) return conversationId;
     try {
       const res = await fetch("/api/vipassana/start", {
         method: "POST",
@@ -82,30 +77,29 @@ export default function VipassanaClient({
       });
       const data = await res.json();
       if (!res.ok) {
-        if (data.error === "invalid_email") setError("That email looks off.");
-        else setError("Something went wrong starting the chat. Try again.");
-        return;
+        setError(
+          data.error === "invalid_email"
+            ? "that email looks off."
+            : "couldn't start chat. try again."
+        );
+        return null;
       }
       setConversationId(data.conversation_id);
-      setStage("chat");
-      setMessages([
-        {
-          role: "assistant",
-          content:
-            name.trim()
-              ? `Heylos ${name.trim()} 👋 — Chotu here. Anuj is on Vipassana (27 May → 7 June 2026). I'm his proxy while he's away. Ask me anything — about his work, his writing, his bets, or just chat. Anuj will follow up when he's back.`
-              : `Heylos 👋 — Chotu here. Anuj is on Vipassana (27 May → 7 June 2026). I'm his proxy while he's away. Ask me anything — about his work, his writing, his bets, or just chat. Anuj will follow up when he's back.`,
-        },
-      ]);
-    } catch (e) {
-      setError("Network error. Try again.");
+      return data.conversation_id;
+    } catch {
+      setError("network error.");
+      return null;
     }
   }
 
-  async function send() {
-    const msg = input.trim();
-    if (!msg || streaming || !conversationId) return;
+  async function send(textOverride?: string) {
+    const msg = (textOverride ?? input).trim();
+    if (!msg || streaming) return;
     setError("");
+
+    const id = await ensureSession();
+    if (!id) return;
+
     setMessages((m) => [...m, { role: "user", content: msg }]);
     setInput("");
     setStreaming(true);
@@ -115,15 +109,12 @@ export default function VipassanaClient({
       const res = await fetch("/api/vipassana/chat", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({
-          conversation_id: conversationId,
-          message: msg,
-        }),
+        body: JSON.stringify({ conversation_id: id, message: msg }),
       });
 
       if (!res.ok) {
         const data = await res.json().catch(() => ({}));
-        const errMsg = data.message || "Something broke. Try again.";
+        const errMsg = data.message || "something broke. try again.";
         setMessages((m) => {
           const copy = [...m];
           copy[copy.length - 1] = { role: "assistant", content: errMsg };
@@ -134,7 +125,7 @@ export default function VipassanaClient({
       }
 
       if (!res.body) {
-        setError("No stream.");
+        setError("no stream.");
         setStreaming(false);
         return;
       }
@@ -152,8 +143,8 @@ export default function VipassanaClient({
           return copy;
         });
       }
-    } catch (e) {
-      setError("Network error mid-stream.");
+    } catch {
+      setError("network error mid-stream.");
     } finally {
       setStreaming(false);
     }
@@ -166,10 +157,34 @@ export default function VipassanaClient({
     }
   }
 
+  function pickSuggestion(prompt: string) {
+    setInput(prompt);
+    inputRef.current?.focus();
+  }
+
+  async function saveIdentity() {
+    setError("");
+    if (email.trim()) {
+      const ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
+      if (!ok) {
+        setError("that email looks off.");
+        return;
+      }
+    }
+    // If no session yet, identity will be sent when ensureSession fires.
+    // If session exists, just keep locally; backend captures on next start.
+    setIdentitySaved(true);
+    setShowIdentify(false);
+  }
+
   return (
     <div className="fixed inset-0 overflow-y-auto bg-zinc-950 text-zinc-100 font-[-apple-system,'SF_Pro_Text',sans-serif] [&::-webkit-scrollbar]:hidden [scrollbar-width:none]">
-      <main className="mx-auto max-w-2xl px-6 py-12">
-        <header className="mb-8">
+      <main
+        className={`mx-auto max-w-[560px] px-6 flex flex-col ${
+          hasChatted ? "min-h-screen py-10" : "min-h-screen justify-center py-16"
+        }`}
+      >
+        <header className={`${hasChatted ? "mb-6" : "mb-8"}`}>
           <div className="flex items-center gap-2 mb-6">
             <div className="w-7 h-7 bg-red-500 rounded-md flex items-center justify-center">
               <svg
@@ -184,123 +199,151 @@ export default function VipassanaClient({
               </svg>
             </div>
             <span className="text-sm font-bold tracking-tight">chotu</span>
+            <span className="ml-auto text-[11px] text-zinc-500 tracking-tight">
+              {counterText(status)}
+            </span>
           </div>
 
-          <h1 className="text-4xl font-bold tracking-tight leading-[1.05] mb-3">
-            Anuj is on <em className="not-italic text-red-500">Vipassana</em>.
-            <br />
-            Chotu is here.
-          </h1>
-          <CounterBanner status={status} />
+          {!hasChatted && (
+            <>
+              <h1 className="text-[42px] font-bold tracking-tight leading-[1.02] mb-3">
+                heyos! i am{" "}
+                <em className="not-italic text-red-500">chotu</em>.
+              </h1>
+              <p className="text-zinc-300 text-[16px] leading-relaxed">
+                anuj is on vipassana. i hold the fort while he's gone.
+              </p>
+            </>
+          )}
         </header>
 
-        {stage === "intro" ? (
-          <section className="space-y-5">
-            <p className="text-zinc-300 text-[15px] leading-relaxed">
-              Anuj is unreachable from <strong>27 May to 7 June 2026</strong> —
-              no phone, no internet, no eye contact, only meditation. He returns
-              8 June 2026.
-            </p>
-            <p className="text-zinc-400 text-[14px] leading-relaxed">
-              Chotu is his proxy. Trained on his writing — essays, journals,
-              project docs. He'll speak in third person, share Anuj's actual
-              thinking, and let you know Anuj will follow up when he's back.
-            </p>
-            <p className="text-zinc-400 text-[14px] leading-relaxed">
-              Want to <em>date him</em>, <em>work with him</em>, <em>just
-              chat</em>, or <em>talk to Chotu directly</em> — all welcome.
-            </p>
-
-            <div className="mt-8 space-y-3 max-w-md">
-              <div>
-                <label className="text-[11px] font-semibold tracking-[0.18em] text-zinc-500 uppercase">
-                  Your name (optional)
-                </label>
-                <input
-                  type="text"
-                  className="mt-1 w-full bg-zinc-900 border border-zinc-800 rounded-lg px-3 py-2.5 text-[14px] focus:outline-none focus:border-zinc-600"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  placeholder="how should Anuj know you"
-                />
-              </div>
-              <div>
-                <label className="text-[11px] font-semibold tracking-[0.18em] text-zinc-500 uppercase">
-                  Your email (optional, for follow-up)
-                </label>
-                <input
-                  type="email"
-                  className="mt-1 w-full bg-zinc-900 border border-zinc-800 rounded-lg px-3 py-2.5 text-[14px] focus:outline-none focus:border-zinc-600"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="your@email.com"
-                />
-              </div>
-              {error && (
-                <div className="text-[12px] text-red-400">{error}</div>
-              )}
-              <button
-                onClick={startSession}
-                className="mt-2 w-full bg-red-500 hover:bg-red-400 text-white font-semibold py-3 rounded-lg text-[14px] transition-colors"
+        {hasChatted && (
+          <section
+            ref={scrollRef}
+            className="flex flex-col gap-4 flex-1 overflow-y-auto mb-4 pr-1"
+          >
+            {messages.map((m, i) => (
+              <div
+                key={i}
+                className={
+                  m.role === "user"
+                    ? "self-end max-w-[85%] bg-zinc-800 rounded-2xl rounded-br-md px-4 py-2.5 text-[14px] leading-relaxed"
+                    : "self-start max-w-[92%] text-[15px] leading-relaxed whitespace-pre-wrap text-zinc-100"
+                }
               >
-                Start talking to Chotu
-              </button>
-              <div className="text-[11px] text-zinc-600 pt-1">
-                Skip the fields — both are optional. But if you want a follow-up
-                from Anuj, email helps.
+                {m.role === "assistant" ? stripMarkdown(m.content) : m.content}
+                {!m.content && streaming && i === messages.length - 1 ? (
+                  <span className="text-zinc-500">…</span>
+                ) : null}
               </div>
-            </div>
-          </section>
-        ) : (
-          <section className="flex flex-col gap-4">
-            <div
-              ref={scrollRef}
-              className="flex flex-col gap-4 max-h-[60vh] overflow-y-auto pr-2"
-            >
-              {messages.map((m, i) => (
-                <div
-                  key={i}
-                  className={
-                    m.role === "user"
-                      ? "self-end max-w-[85%] bg-zinc-800 rounded-2xl rounded-br-md px-4 py-2.5 text-[14px] leading-relaxed"
-                      : "self-start max-w-[90%] text-[14.5px] leading-relaxed whitespace-pre-wrap"
-                  }
-                >
-                  {m.role === "assistant" ? stripMarkdown(m.content) : m.content || ""}
-                  {!m.content && streaming && i === messages.length - 1 ? (
-                    <span className="text-zinc-500">…</span>
-                  ) : null}
-                </div>
-              ))}
-            </div>
-
-            <div className="mt-2 flex gap-2 items-end border-t border-zinc-900 pt-4">
-              <textarea
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                onKeyDown={onKey}
-                disabled={streaming}
-                placeholder="ask anything…"
-                rows={1}
-                className="flex-1 resize-none bg-zinc-900 border border-zinc-800 rounded-lg px-3 py-2.5 text-[14px] focus:outline-none focus:border-zinc-600 disabled:opacity-50"
-              />
-              <button
-                onClick={send}
-                disabled={streaming || !input.trim()}
-                className="bg-red-500 hover:bg-red-400 disabled:opacity-40 disabled:cursor-not-allowed text-white font-semibold px-4 py-2.5 rounded-lg text-[14px] transition-colors"
-              >
-                Send
-              </button>
-            </div>
-            {error && (
-              <div className="text-[12px] text-red-400">{error}</div>
-            )}
-            <div className="text-[11px] text-zinc-600">
-              Chotu speaks for Anuj in third person. Anuj will follow up when
-              he's back (8 June 2026).
-            </div>
+            ))}
           </section>
         )}
+
+        <section className="space-y-3">
+          <div className="relative">
+            <textarea
+              ref={inputRef}
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyDown={onKey}
+              disabled={streaming}
+              placeholder={hasChatted ? "reply…" : "ask chotu anything…"}
+              rows={hasChatted ? 1 : 2}
+              className="w-full resize-none bg-zinc-900 border border-zinc-800 rounded-2xl px-4 py-3 pr-14 text-[15px] leading-relaxed focus:outline-none focus:border-zinc-600 disabled:opacity-50 placeholder:text-zinc-600"
+              autoFocus
+            />
+            <button
+              onClick={() => send()}
+              disabled={streaming || !input.trim()}
+              aria-label="send"
+              className="absolute bottom-2.5 right-2.5 bg-red-500 hover:bg-red-400 disabled:opacity-30 disabled:cursor-not-allowed text-white rounded-full w-9 h-9 flex items-center justify-center transition-colors"
+            >
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+                <path
+                  d="M8 14V2M8 2L2.5 7.5M8 2l5.5 5.5"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </button>
+          </div>
+
+          {!hasChatted && (
+            <div className="flex flex-wrap gap-2">
+              {SUGGESTIONS.map((s) => (
+                <button
+                  key={s.label}
+                  onClick={() => pickSuggestion(s.prompt)}
+                  className="text-[12.5px] text-zinc-300 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 hover:border-zinc-700 rounded-full px-3 py-1.5 transition-colors"
+                >
+                  {s.label}
+                </button>
+              ))}
+            </div>
+          )}
+
+          {error && <div className="text-[12px] text-red-400">{error}</div>}
+
+          {!showIdentify && !identitySaved && (
+            <button
+              onClick={() => setShowIdentify(true)}
+              className="text-[11px] text-zinc-500 hover:text-zinc-300 underline underline-offset-2 transition-colors"
+            >
+              tell anuj who you are (optional)
+            </button>
+          )}
+
+          {identitySaved && !showIdentify && (
+            <div className="text-[11px] text-zinc-500">
+              got it — anuj will follow up when he's back.{" "}
+              <button
+                onClick={() => setShowIdentify(true)}
+                className="underline underline-offset-2 hover:text-zinc-300"
+              >
+                edit
+              </button>
+            </div>
+          )}
+
+          {showIdentify && (
+            <div className="space-y-2 pt-1 border-t border-zinc-900">
+              <div className="text-[11px] text-zinc-500 pt-3">
+                so anuj can follow up. both optional.
+              </div>
+              <input
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="your name"
+                className="w-full bg-zinc-900 border border-zinc-800 rounded-lg px-3 py-2 text-[13px] focus:outline-none focus:border-zinc-600"
+              />
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="your@email.com"
+                className="w-full bg-zinc-900 border border-zinc-800 rounded-lg px-3 py-2 text-[13px] focus:outline-none focus:border-zinc-600"
+              />
+              <div className="flex gap-2">
+                <button
+                  onClick={saveIdentity}
+                  className="text-[12px] bg-zinc-100 hover:bg-white text-zinc-900 font-medium px-3 py-1.5 rounded-md transition-colors"
+                >
+                  save
+                </button>
+                <button
+                  onClick={() => setShowIdentify(false)}
+                  className="text-[12px] text-zinc-500 hover:text-zinc-300 px-2 py-1.5 transition-colors"
+                >
+                  cancel
+                </button>
+              </div>
+            </div>
+          )}
+        </section>
       </main>
     </div>
   );

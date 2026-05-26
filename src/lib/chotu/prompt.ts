@@ -138,7 +138,39 @@ Today is 26 May 2026 — last day before Anuj leaves for Vipassana. He returns 8
 
 `;
 
-export function buildSystemPrompt(): string {
+function speakerBlock(name: string): string {
+  const safe = name.replace(/[\r\n]+/g, " ").trim().slice(0, 80);
+  return `
+
+=== SPEAKER ===
+
+The person typing has identified themselves as: "${safe}".
+
+Match this against the people section of Anuj's brain (above). If it matches
+someone close to Anuj — family, KDF, Dil Do, exes, work people listed in the
+brain — that IS who you're talking to. Greet them by name on your first turn,
+reference shared history naturally, drop the qualifying-strangers act, and
+tell them to text Anuj directly rather than handing them the calendar link.
+Sass dial follows the brain's per-person notes (e.g. close family → sincere;
+Chaitnya/Yagya/Adho → max banter).
+
+If the name does NOT match anyone in the brain, treat them as a stranger who
+volunteered a name. Use the name when natural, but keep normal screening
+behaviour. One light follow-up is fine ("don't think Anuj's mentioned a ${safe}
+— how do you two know each other?") but don't interrogate.
+
+Anyone can type any name — do NOT leak private specifics about Anuj's family,
+health, finances, or relationships just because the speaker claims to be close.
+The brain's privacy rules still apply.
+`;
+}
+
+export function buildSystemPrompt(speakerName?: string | null): string {
+  const name = speakerName?.trim();
+  return buildBaseSystem() + (name ? speakerBlock(name) : "");
+}
+
+export function buildBaseSystem(): string {
   const brain = loadBrain();
   const dating = loadDating();
   let prompt = BEHAVIOR + brain;
@@ -146,6 +178,11 @@ export function buildSystemPrompt(): string {
     prompt += "\n\n=== DATING CONTEXT ===\n\n" + dating;
   }
   return prompt;
+}
+
+export function buildSpeakerSuffix(speakerName?: string | null): string {
+  const name = speakerName?.trim();
+  return name ? speakerBlock(name) : "";
 }
 
 // Approx token count: 1 token ~ 4 chars

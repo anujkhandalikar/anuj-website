@@ -80,6 +80,16 @@ export default function VipassanaClient({
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [identitySaved, setIdentitySaved] = useState(false);
+
+  useEffect(() => {
+    try {
+      const savedName = localStorage.getItem("chotu.name") || "";
+      const savedEmail = localStorage.getItem("chotu.email") || "";
+      if (savedName) setName(savedName);
+      if (savedEmail) setEmail(savedEmail);
+      if (savedName || savedEmail) setIdentitySaved(true);
+    } catch {}
+  }, []);
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const carouselRef = useRef<HTMLDivElement>(null);
@@ -184,7 +194,11 @@ export default function VipassanaClient({
       const res = await fetch("/api/vipassana/chat", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ conversation_id: id, message: msg }),
+        body: JSON.stringify({
+          conversation_id: id,
+          message: msg,
+          name: name.trim() || undefined,
+        }),
       });
 
       if (!res.ok) {
@@ -246,8 +260,14 @@ export default function VipassanaClient({
         return;
       }
     }
-    // If no session yet, identity will be sent when ensureSession fires.
-    // If session exists, just keep locally; backend captures on next start.
+    try {
+      const n = name.trim();
+      const e = email.trim();
+      if (n) localStorage.setItem("chotu.name", n);
+      else localStorage.removeItem("chotu.name");
+      if (e) localStorage.setItem("chotu.email", e);
+      else localStorage.removeItem("chotu.email");
+    } catch {}
     setIdentitySaved(true);
     setShowIdentify(false);
   }
@@ -390,7 +410,7 @@ export default function VipassanaClient({
           {showIdentify && (
             <div className="space-y-2 pt-1 border-t border-zinc-900">
               <div className="text-[11px] text-zinc-500 pt-3">
-                so anuj can follow up. both optional.
+                name tells chotu who you are. email lets anuj follow up. both optional.
               </div>
                 <input
                   type="text"

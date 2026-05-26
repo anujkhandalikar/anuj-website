@@ -1,6 +1,6 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { getSupabase } from "@/lib/chotu/supabase";
-import { buildSystemPrompt } from "@/lib/chotu/prompt";
+import { buildBaseSystem, buildSpeakerSuffix } from "@/lib/chotu/prompt";
 import {
   getClientIP,
   incrementAndCheck,
@@ -20,6 +20,7 @@ const MAX_OUTPUT_TOKENS = 500;
 type Body = {
   conversation_id?: string;
   message?: string;
+  name?: string;
 };
 
 type Msg = { role: "user" | "assistant"; content: string };
@@ -42,6 +43,31 @@ async function loadHistory(conversationId: string): Promise<Msg[]> {
     .limit(50);
   if (error || !data) return [];
   return data.map((d) => ({ role: d.role as Msg["role"], content: d.content }));
+}
+
+async function resolveSpeakerName(
+  conversationId: string,
+  bodyName: string | undefined,
+): Promise<string | null> {
+  const supabase = getSupabase();
+  const trimmed = bodyName?.trim().slice(0, 80) || null;
+
+  if (!supabase) return trimmed;
+
+  if (trimmed) {
+    await supabase
+      .from("vipassana_conversations")
+      .update({ name: trimmed })
+      .eq("id", conversationId);
+    return trimmed;
+  }
+
+  const { data } = await supabase
+    .from("vipassana_conversations")
+    .select("name")
+    .eq("id", conversationId)
+    .single();
+  return (data?.name as string | null) || null;
 }
 
 async function saveMessage(
@@ -95,13 +121,15 @@ export async function POST(request: Request) {
   }
 
   const history = await loadHistory(conversationId);
+  const speakerName = await resolveSpeakerName(conversationId, body.name);
   await saveMessage(conversationId, "user", userMessage);
 
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) return jsonError(500, "missing_anthropic_key");
   const client = new Anthropic({ apiKey });
 
-  const systemPrompt = buildSystemPrompt();
+  const baseSystem = buildBaseSystem();
+  const speakerSuffix = buildSpeakerSuffix(speakerName);
 
   const stream = new ReadableStream({
     async start(controller) {
@@ -121,9 +149,12 @@ export async function POST(request: Request) {
           system: [
             {
               type: "text",
-              text: systemPrompt,
+              text: baseSystem,
               cache_control: { type: "ephemeral" },
             },
+            ...(speakerSuffix
+              ? [{ type: "text" as const, text: speakerSuffix }]
+              : []),
           ],
           messages,
         });

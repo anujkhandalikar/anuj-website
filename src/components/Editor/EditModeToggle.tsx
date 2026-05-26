@@ -11,7 +11,7 @@ export default function EditModeToggle() {
     useEdit();
   const [showLogin, setShowLogin] = useState(false);
 
-  if (pathname?.startsWith("/vipassana")) return null;
+  if (pathname?.startsWith("/chotu")) return null;
 
   const handleEditClick = () => {
     if (!isAuthenticated) {

@@ -23,7 +23,7 @@ export default function MobileHeader({ pages }: MobileHeaderProps) {
     const { isAuthenticated, isEditMode, setIsEditMode, checkAuth } = useEdit();
     const [showLogin, setShowLogin] = useState(false);
 
-    if (pathname?.startsWith("/vipassana")) return null;
+    if (pathname?.startsWith("/chotu")) return null;
 
     // Close dropdown when clicking outside
     useEffect(() => {

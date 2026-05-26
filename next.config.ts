@@ -16,6 +16,16 @@ const nextConfig: NextConfig = {
     // Optimize package imports
     optimizePackageImports: ['@tiptap/react', '@tiptap/starter-kit'],
   },
+
+  async redirects() {
+    return [
+      {
+        source: "/vipassana",
+        destination: "/chotu",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

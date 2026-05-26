@@ -76,14 +76,12 @@ const LOADING_LINES = [
 ];
 
 const SUGGESTIONS = [
-  { label: "💬 just chat", prompt: "hey chotu — what's anuj been thinking about lately?" },
-  { label: "🧠 pick his brain", prompt: "i want to pick anuj's brain — what would he say about this?" },
   { label: "💼 work with him", prompt: "what's anuj working on? would we be a fit?" },
+  { label: "💸 hire him", prompt: "i'm thinking of hiring anuj. what's he good at?" },
+  { label: "🧠 brainstorm with him", prompt: "i want to brainstorm something with anuj. how do we set that up?" },
   { label: "❤️ date him", prompt: "tell me about anuj — would i want to date him?" },
   { label: "🔥 roast him", prompt: "roast anuj for me. don't hold back." },
-  { label: "📅 schedule a meet", prompt: "i want to meet anuj when he's back. can you help set that up?" },
-  { label: "🤔 what's he like", prompt: "what kind of person is anuj? give me the real version." },
-  { label: "📝 share something", prompt: "i just want to leave anuj a note for when he's back." },
+  { label: "📅 meet him", prompt: "i want to meet anuj when he's back. can you help set that up?" },
 ];
 
 export default function VipassanaClient({
@@ -350,9 +348,6 @@ export default function VipassanaClient({
                 <br />
                 in anuj&apos;s words.
               </h1>
-              <p className="text-zinc-400 text-[13px] italic leading-relaxed mb-3">
-                i&apos;ve been doing his customer service for 8 years.
-              </p>
               <p className="text-zinc-300 text-[16px] leading-relaxed min-h-[1.6em]">
                 ask about{" "}
                 <span key={typedAsk} className="text-red-400 chotu-fade">
@@ -360,7 +355,7 @@ export default function VipassanaClient({
                 </span>
               </p>
               <p className="text-zinc-500 text-[12px] mt-4 leading-relaxed">
-                trained on 8 years of his journals. yes, including the ones about her.
+                8 years of his journals. 1000+ notes. one overworked chotu.
               </p>
             </>
           )}

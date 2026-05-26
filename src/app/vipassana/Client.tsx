@@ -285,7 +285,7 @@ export default function VipassanaClient({
               onClick={() => send()}
               disabled={streaming || !input.trim()}
               aria-label="send"
-              className="absolute bottom-2.5 right-2.5 bg-red-500 hover:bg-red-400 disabled:opacity-30 disabled:cursor-not-allowed text-white rounded-full w-9 h-9 flex items-center justify-center transition-colors"
+              className="absolute top-1/2 -translate-y-1/2 right-2.5 bg-red-500 hover:bg-red-400 disabled:opacity-30 disabled:cursor-not-allowed text-white rounded-full w-9 h-9 flex items-center justify-center transition-colors"
             >
               <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
                 <path

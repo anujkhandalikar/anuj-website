@@ -45,15 +45,26 @@ function renderContent(s: string) {
 
 function counterText(status: Status): string {
   if (status.phase === "before") {
-    return `anuj goes silent in ${status.days} ${status.days === 1 ? "day" : "days"}`;
+    return `${status.days} ${status.days === 1 ? "day" : "days"} until he ghosts everyone`;
   }
   if (status.phase === "during") {
     const left = status.total - status.days;
-    if (left <= 0) return `anuj returns tomorrow`;
-    return `${left} ${left === 1 ? "day" : "days"} of silence left`;
+    if (left <= 0) return `he's back tomorrow. brace yourself`;
+    return `${left} ${left === 1 ? "day" : "days"} until he resurfaces`;
   }
-  return `anuj is back`;
+  return `he's back. you're welcome`;
 }
+
+const ASK_PHRASES = [
+  "if he's single (yes, painfully)",
+  "the bike he named like a girlfriend",
+  "why he left flipkart",
+  "what he claims he's building",
+  "his ai takes (loud)",
+  "why he runs everywhere",
+  "the kannada flexing app he built",
+  "his mom's halloween text",
+];
 
 const LOADING_LINES = [
   "reading you like a book",
@@ -91,6 +102,7 @@ export default function VipassanaClient({
   const [email, setEmail] = useState("");
   const [identitySaved, setIdentitySaved] = useState(false);
   const [loadingIdx, setLoadingIdx] = useState(0);
+  const [typedAsk, setTypedAsk] = useState("");
 
   useEffect(() => {
     try {
@@ -164,6 +176,17 @@ export default function VipassanaClient({
     }, 2200);
     return () => clearInterval(t);
   }, [streaming]);
+
+  useEffect(() => {
+    if (hasChatted) return;
+    setTypedAsk(ASK_PHRASES[0]);
+    let idx = 0;
+    const id = setInterval(() => {
+      idx = (idx + 1) % ASK_PHRASES.length;
+      setTypedAsk(ASK_PHRASES[idx]);
+    }, 2000);
+    return () => clearInterval(id);
+  }, [hasChatted]);
 
   async function ensureSession(): Promise<string | null> {
     if (conversationId) return conversationId;
@@ -323,11 +346,21 @@ export default function VipassanaClient({
           {!hasChatted && (
             <>
               <h1 className="text-[42px] font-bold tracking-tight leading-[1.02] mb-3">
-                heyos! i am{" "}
-                <em className="not-italic text-red-500">chotu</em>.
+                this is <em className="not-italic text-red-500">chotu</em>.
+                <br />
+                in anuj&apos;s words.
               </h1>
-              <p className="text-zinc-300 text-[16px] leading-relaxed">
-                anuj is on vipassana. i hold the fort while he's gone.
+              <p className="text-zinc-400 text-[13px] italic leading-relaxed mb-3">
+                i&apos;ve been doing his customer service for 8 years.
+              </p>
+              <p className="text-zinc-300 text-[16px] leading-relaxed min-h-[1.6em]">
+                ask about{" "}
+                <span key={typedAsk} className="text-red-400 chotu-fade">
+                  {typedAsk || ASK_PHRASES[0]}
+                </span>
+              </p>
+              <p className="text-zinc-500 text-[12px] mt-4 leading-relaxed">
+                trained on 8 years of his journals. yes, including the ones about her.
               </p>
             </>
           )}
@@ -416,7 +449,7 @@ export default function VipassanaClient({
               onClick={() => setShowIdentify(true)}
               className="text-[11px] text-zinc-500 hover:text-zinc-300 underline underline-offset-2 transition-colors"
             >
-              tell anuj who you are (optional)
+              tell anuj who you are. or don&apos;t. i&apos;ll guess.
             </button>
           )}
 
@@ -435,7 +468,7 @@ export default function VipassanaClient({
           {showIdentify && (
             <div className="space-y-2 pt-1 border-t border-zinc-900">
               <div className="text-[11px] text-zinc-500 pt-3">
-                name tells chotu who you are. email lets anuj follow up. both optional.
+                name so i stop calling you &quot;random person&quot;. email so anuj can follow up when he&apos;s done finding himself.
               </div>
                 <input
                   type="text"

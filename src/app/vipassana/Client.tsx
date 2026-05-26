@@ -9,6 +9,19 @@ type Status =
 
 type Msg = { role: "user" | "assistant"; content: string };
 
+// Strip basic markdown from assistant text. Belt-and-suspenders against the
+// model occasionally using bold/italic/headers despite the prompt rule.
+function stripMarkdown(s: string): string {
+  return s
+    .replace(/\*\*(.+?)\*\*/g, "$1")
+    .replace(/__(.+?)__/g, "$1")
+    .replace(/(^|\s)\*(\S[^*]*\S|\S)\*(?=\s|$)/g, "$1$2")
+    .replace(/(^|\s)_(\S[^_]*\S|\S)_(?=\s|$)/g, "$1$2")
+    .replace(/^#+\s+/gm, "")
+    .replace(/^[-*]\s+/gm, "")
+    .replace(/^\d+\.\s+/gm, "");
+}
+
 function CounterBanner({ status }: { status: Status }) {
   if (status.phase === "before") {
     return (
@@ -154,7 +167,7 @@ export default function VipassanaClient({
   }
 
   return (
-    <div className="min-h-dvh bg-zinc-950 text-zinc-100 font-[-apple-system,'SF_Pro_Text',sans-serif]">
+    <div className="fixed inset-0 overflow-y-auto bg-zinc-950 text-zinc-100 font-[-apple-system,'SF_Pro_Text',sans-serif] [&::-webkit-scrollbar]:hidden [scrollbar-width:none]">
       <main className="mx-auto max-w-2xl px-6 py-12">
         <header className="mb-8">
           <div className="flex items-center gap-2 mb-6">
@@ -253,9 +266,10 @@ export default function VipassanaClient({
                       : "self-start max-w-[90%] text-[14.5px] leading-relaxed whitespace-pre-wrap"
                   }
                 >
-                  {m.content || (streaming && i === messages.length - 1 ? (
+                  {m.role === "assistant" ? stripMarkdown(m.content) : m.content || ""}
+                  {!m.content && streaming && i === messages.length - 1 ? (
                     <span className="text-zinc-500">…</span>
-                  ) : null)}
+                  ) : null}
                 </div>
               ))}
             </div>

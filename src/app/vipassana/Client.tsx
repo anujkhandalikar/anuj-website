@@ -97,7 +97,7 @@ export default function VipassanaClient({
 
     const scroll = () => {
       if (!isHovering) {
-        currentScroll += 0.5;
+        currentScroll += 0.25;
         if (currentScroll >= el.scrollWidth / 2) {
           currentScroll -= el.scrollWidth / 2;
         }

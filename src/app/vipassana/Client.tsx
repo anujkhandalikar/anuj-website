@@ -122,14 +122,18 @@ export default function VipassanaClient({
   async function send(textOverride?: string) {
     const msg = (textOverride ?? input).trim();
     if (!msg || streaming) return;
+    
+    setStreaming(true);
     setError("");
 
     const id = await ensureSession();
-    if (!id) return;
+    if (!id) {
+      setStreaming(false);
+      return;
+    }
 
     setMessages((m) => [...m, { role: "user", content: msg }]);
     setInput("");
-    setStreaming(true);
     setMessages((m) => [...m, { role: "assistant", content: "" }]);
 
     try {

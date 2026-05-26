@@ -55,6 +55,15 @@ function counterText(status: Status): string {
   return `anuj is back`;
 }
 
+const LOADING_LINES = [
+  "reading you",
+  "thinking, hold on",
+  "pulling your file",
+  "deciding if you deserve a real answer",
+  "warming up the brain",
+  "composing something cutting",
+];
+
 const SUGGESTIONS = [
   { label: "💬 just chat", prompt: "hey chotu — what's anuj been thinking about lately?" },
   { label: "💼 work with him", prompt: "what's anuj working on? would we be a fit?" },
@@ -80,6 +89,7 @@ export default function VipassanaClient({
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [identitySaved, setIdentitySaved] = useState(false);
+  const [loadingIdx, setLoadingIdx] = useState(0);
 
   useEffect(() => {
     try {
@@ -144,6 +154,15 @@ export default function VipassanaClient({
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
   }, [messages, streaming]);
+
+  useEffect(() => {
+    if (!streaming) return;
+    setLoadingIdx(Math.floor(Math.random() * LOADING_LINES.length));
+    const t = setInterval(() => {
+      setLoadingIdx((i) => (i + 1) % LOADING_LINES.length);
+    }, 2200);
+    return () => clearInterval(t);
+  }, [streaming]);
 
   async function ensureSession(): Promise<string | null> {
     if (conversationId) return conversationId;
@@ -329,7 +348,12 @@ export default function VipassanaClient({
               >
                 {m.role === "assistant" ? renderContent(m.content) : m.content}
                 {!m.content && streaming && i === messages.length - 1 ? (
-                  <span className="text-zinc-500">…</span>
+                  <span className="text-zinc-500 italic">
+                    {LOADING_LINES[loadingIdx]}
+                    <span className="chotu-dot">.</span>
+                    <span className="chotu-dot">.</span>
+                    <span className="chotu-dot">.</span>
+                  </span>
                 ) : null}
               </div>
             ))}

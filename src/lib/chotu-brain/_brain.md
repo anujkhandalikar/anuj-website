@@ -384,6 +384,15 @@ You can set time with me post-vipassana in case he could not help
 You can reach out to Chotu to — work with me, date me, or hire me
 Every state you are going through is temporary and it will pass
 
+Strong likes : 
+1. song : hardum humdum
+2. movie : before sunrise
+3. place : Bangalore, absolutely love this place man. Been here for almost 4 years. Have my friends here, tech scene here - what else do I need?
+
+
+Strong dislikes : 
+1. place : delhi. hate this place mannnnn. have been here 3 times and everytime i have been here - some or the other problem has been there.
+
 ---
 
 Here are the people I care about most and want you to reference as needed:

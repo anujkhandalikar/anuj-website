@@ -8,9 +8,32 @@ function todayUTC(): string {
 
 export async function incrementAndCheck(
   ip: string,
-): Promise<{ allowed: boolean; count: number }> {
+  conversationId?: string,
+): Promise<{ allowed: boolean; count: number; limit: number }> {
   const supabase = getSupabase();
-  if (!supabase) return { allowed: true, count: 0 };
+  if (!supabase) return { allowed: true, count: 0, limit: MESSAGES_PER_IP_PER_DAY };
+
+  let limit = MESSAGES_PER_IP_PER_DAY;
+
+  if (conversationId) {
+    const { data: convData, error: convErr } = await supabase
+      .from("vipassana_conversations")
+      .select("name")
+      .eq("id", conversationId)
+      .maybeSingle();
+
+    if (!convErr && convData?.name) {
+      const name = convData.name.trim().toLowerCase();
+      if (name === "dee" || name === "chai") {
+        limit = Infinity;
+      }
+    }
+  }
+
+  if (limit === Infinity) {
+    return { allowed: true, count: 0, limit };
+  }
+
   const day = todayUTC();
   const { data, error } = await supabase
     .from("vipassana_rate_limit")
@@ -21,7 +44,7 @@ export async function incrementAndCheck(
 
   if (error) {
     console.error("rate limit select failed", error);
-    return { allowed: true, count: 0 };
+    return { allowed: true, count: 0, limit };
   }
 
   const count = (data?.count ?? 0) + 1;
@@ -36,7 +59,7 @@ export async function incrementAndCheck(
     console.error("rate limit upsert failed", upsertErr);
   }
 
-  return { allowed: count <= MESSAGES_PER_IP_PER_DAY, count };
+  return { allowed: count <= limit, count, limit };
 }
 
 export function getClientIP(req: Request): string {

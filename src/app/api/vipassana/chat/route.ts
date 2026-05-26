@@ -4,7 +4,6 @@ import { buildSystemPrompt } from "@/lib/chotu/prompt";
 import {
   getClientIP,
   incrementAndCheck,
-  MESSAGES_PER_IP_PER_DAY,
 } from "@/lib/chotu/rate-limit";
 import {
   addCostINR,
@@ -75,18 +74,6 @@ export async function POST(request: Request) {
     );
   }
 
-  const ip = getClientIP(request);
-  const { allowed, count } = await incrementAndCheck(ip);
-  if (!allowed) {
-    return jsonError(
-      429,
-      "rate_limited",
-      {
-        message: `You've sent ${count} messages today. Daily limit is ${MESSAGES_PER_IP_PER_DAY}. Try again tomorrow.`,
-      },
-    );
-  }
-
   const body: Body = await request.json().catch(() => ({}));
   const conversationId = body.conversation_id;
   const userMessage = body.message?.trim();
@@ -94,6 +81,18 @@ export async function POST(request: Request) {
   if (!conversationId) return jsonError(400, "missing_conversation_id");
   if (!userMessage) return jsonError(400, "missing_message");
   if (userMessage.length > 4000) return jsonError(400, "message_too_long");
+
+  const ip = getClientIP(request);
+  const { allowed, count, limit } = await incrementAndCheck(ip, conversationId);
+  if (!allowed) {
+    return jsonError(
+      429,
+      "rate_limited",
+      {
+        message: `You've sent ${count} messages today. Daily limit is ${limit}. Try again tomorrow.`,
+      },
+    );
+  }
 
   const history = await loadHistory(conversationId);
   await saveMessage(conversationId, "user", userMessage);
@@ -170,7 +169,7 @@ export async function POST(request: Request) {
     headers: {
       "content-type": "text/plain; charset=utf-8",
       "x-rate-count": String(count),
-      "x-rate-limit": String(MESSAGES_PER_IP_PER_DAY),
+      "x-rate-limit": String(limit),
     },
   });
 }

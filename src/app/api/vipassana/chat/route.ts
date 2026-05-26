@@ -16,7 +16,7 @@ import {
 export const runtime = "nodejs";
 
 const MODEL = "claude-sonnet-4-6";
-const MAX_OUTPUT_TOKENS = 800;
+const MAX_OUTPUT_TOKENS = 500;
 
 type Body = {
   conversation_id?: string;

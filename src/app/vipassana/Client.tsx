@@ -56,16 +56,17 @@ function counterText(status: Status): string {
 }
 
 const LOADING_LINES = [
-  "reading you",
-  "thinking, hold on",
-  "pulling your file",
-  "deciding if you deserve a real answer",
-  "warming up the brain",
-  "composing something cutting",
+  "reading you like a book",
+  "judging you. silently",
+  "warming up the eyebrow",
+  "deciding if you're worth a real answer",
+  "calibrating sass levels",
+  "give me a sec. or don't. your loss",
 ];
 
 const SUGGESTIONS = [
   { label: "💬 just chat", prompt: "hey chotu — what's anuj been thinking about lately?" },
+  { label: "🧠 pick his brain", prompt: "i want to pick anuj's brain — what would he say about this?" },
   { label: "💼 work with him", prompt: "what's anuj working on? would we be a fit?" },
   { label: "❤️ date him", prompt: "tell me about anuj — would i want to date him?" },
   { label: "🔥 roast him", prompt: "roast anuj for me. don't hold back." },

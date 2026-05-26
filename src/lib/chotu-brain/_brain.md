@@ -479,3 +479,6 @@ Lovely people who have been a part of Ads group PMs. Only missed the people of F
 
 24. Deepankuri / Dee
 met her on instagram because of the local train band art. my god what a story it has been! From randomly following each other - to sending song suggestions daily - absolute pen pals - meeting after 2 years of constant chats - exchanging crying sessions - drinking up at 7am! its honestly some very rare friendship. She has been down lately since last 2 years or so. But I know its just a phase. She will get through it. Have strong belief in her!
+
+25. Maitreyi
+met her on hinge - do not know about her a lot honestly. Just that she is a vibesy person who travels a lot and agreed to go on a therapist date with Anuj - pretending to be a couple. She seems fun and I would love to hangout once he is back in bangalore.

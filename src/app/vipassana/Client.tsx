@@ -20,6 +20,29 @@ function stripMarkdown(s: string): string {
     .replace(/^\d+\.\s+/gm, "");
 }
 
+function renderContent(s: string) {
+  const stripped = stripMarkdown(s);
+  const urlRegex = /(https?:\/\/[^\s<)]+)/g;
+  const parts = stripped.split(urlRegex);
+  
+  return parts.map((part, i) => {
+    if (part.match(urlRegex)) {
+      return (
+        <a 
+          key={i} 
+          href={part} 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="text-red-400 hover:text-red-300 underline underline-offset-2 transition-colors"
+        >
+          {part}
+        </a>
+      );
+    }
+    return part;
+  });
+}
+
 function counterText(status: Status): string {
   if (status.phase === "before") {
     return `anuj goes silent in ${status.days} ${status.days === 1 ? "day" : "days"}`;
@@ -235,7 +258,7 @@ export default function VipassanaClient({
                     : "self-start max-w-[92%] text-[15px] leading-relaxed whitespace-pre-wrap text-zinc-100"
                 }
               >
-                {m.role === "assistant" ? stripMarkdown(m.content) : m.content}
+                {m.role === "assistant" ? renderContent(m.content) : m.content}
                 {!m.content && streaming && i === messages.length - 1 ? (
                   <span className="text-zinc-500">…</span>
                 ) : null}

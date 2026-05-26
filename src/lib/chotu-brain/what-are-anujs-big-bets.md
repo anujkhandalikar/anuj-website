@@ -1,36 +1,86 @@
-# what are anuj's big bets
+Good, I've read it fully. Your framework from that article is clear:
 
-## the headline bet: a warm voice for every parent
+- Intelligence = ability to make meaning and take action from information
+- AI = a super-smart being sitting between you and the world (not a tool, not a friend — something new)
+- It can Automate, Collaborate, Elevate
+- What it can't do: care
 
-The biggest bet Anuj is making in 2026 is that *voice* is the right way to bring AI into homes that don't open apps. The full thesis sits in *Mili Product Vision Doc* and the *Saathi v1 Masterdoc*: *every family has Mili, a voice that keeps them connected, healthy, and joyful.* He believes the elderly market is the right wedge — high need, low tech adoption, no real competitor doing voice-native — but the longer dream is wider. His YC Winter 2026 application says it directly: *as Mili evolves, this voice will take form, not just as an AI on a call, but as a caring physical companion, a robot that lives with them, listens, and looks after them with warmth and intelligence.* The bet is that proactive voice is the next interface, and that he and his co-founders — Sanjeed and Srinivas — are the right team to build it.
+And the Swiggy analogy now clicks even harder — Zomato put a layer between you and food and democratised choice. You're betting on putting a layer of *intelligence* between every person and their life — and democratising what was previously only available to people with PAs, chiefs of staff, lawyers on speed dial.
 
-## the second bet: attention is broken, effort is the next currency
+Okay. I have everything I need. Writing now.
 
-The most original of his standalone idea notes is *Earned* — *make effort the new currency of digital life*. The premise: the internet rewards passivity (scroll, tap, like) but the experiences people remember are the ones they earned. So gate content drops behind verifiable effort — 2,000 steps, five minutes of meditation, a finished chapter — verified via Apple Health, Strava, Fitbit, or peer attestation. *You finish your morning run, sweaty and proud, and your favorite musician's unreleased track quietly unlocks on your screen.* He writes that this comes from his own experience getting into running — multiple 5Ks, 10Ks, a half marathon — and noticing *nothing beats the feeling of earning something*. The data point he cites: 68% of Gen Z want to spend less time on social media (McKinsey 2024), and 1B+ wearables are now in use (Statista 2024). His bet: *attention's become cheap; effort hasn't.*
+---
 
-## the third bet: AI must stay free, paid for by intent
+**Anuj's Big Bets**
 
-In his Obsidian note *free_ai*, he writes the case for what he calls *the next layer of the internet*: AI models so expensive to run that they will retreat behind paywalls unless someone designs an alternative business model. His proposal — ad-funded intelligence, the way ads once funded Google and YouTube. *Compute gets paid for by commerce, not users.* He pulls together the macro signals: frontier model inference costs millions per day, but global ad spend just crossed $1 trillion (GroupM 2024), and user behaviour is shifting from browsing to *asking agents*. *The web was ad-funded attention. The next one will be ad-funded cognition.* The note explicitly leverages his background in ads at Flipkart — a thesis only he can write because of where he has worked.
+---
 
-## the fourth bet: offline ads will become measurable
+Twenty years ago, if you wanted food from a good restaurant delivered to your home at 11pm, you needed to either know someone or be someone. That got solved. Swiggy and Zomato didn't just build an app — they put a layer between you and the world, and made choice available to everyone.
 
-In his Obsidian note *offline_ads* he points out the absurdity that digital ads have *six knobs* — pre-run, during-run, post-run, with realtime reallocation, A/B variants, multi-campaign experimentation — while offline ads still mostly run blind. No cohortisation, no individual billboard measurement, no live performance, no post-campaign attribution. He treats this as a market waiting for someone to digitize the measurement layer. He has not committed to building this one, but the framing is unambiguous: *all the six queries digital ads run on heavily rely on data; in offline ads, little to nothing is known.* That is the gap he keeps pointing at.
+I think we're at the beginning of something much bigger than food delivery.
 
-## the personal bet: house full of love, on a deadline
+For most of human history, having someone in your corner — someone who handles your calendar, screens your calls, drafts your messages, reminds you what matters, and acts on your behalf when you're unavailable — that was a privilege. CEOs have chiefs of staff. Celebrities have managers. The wealthy have assistants. Everyone else figures it out alone.
 
-The personal bets in his writing are as explicit as the product ones. In *p_family* he runs the math on his own next decade — projected net profits of about ₹1.2Cr in five years, ~₹3Cr by 35 — and is unsentimental about the gap between that and what he actually wants. *I would have 3Cr in my bank acc. Decent figures, still cannot buy home without loans.* His most repeated personal vision is *house full of love* — the third corner of his *fit body × fit mind × house full of love* equation — and he is betting that the next decade is when the third corner gets built. The forecast appears in journals across years; the most recent versions in 2025–26 carry urgency.
+That gap is what I'm building toward closing.
 
-## the smaller standing bets
+---
 
-A cluster of smaller convictions appears across his writing as throwaway lines that turn into recurring positions:
+**The headline bet: personal intelligence for everyone**
 
-- **Proactive AI will be a gamechanger** (from *Resonect / What we build*). Reactive chatbots are a stop on the way; proactive agents that initiate are the destination.
-- **Genz shops fundamentally differently, and trendy commerce is rising** (from *Why build again?*). He flags this as a market to watch even though he isn't building in it.
-- **Target user segments of kids and elderly are under-penetrated.** He believes the big platforms have built almost exclusively for the working-age user. Both ends of the age spectrum are mostly unaddressed.
-- **Things that talk** — physical AI installations (a talking tree in a park, art pieces in a museum that converse with you). Listed in the YC application as an alternative idea. He likes the playful surface and the underlying bet that voice-native interfaces are how AI will pervade physical space.
-- **Parents as heroes in AI-generated comics for kids.** Same application; the bet that AI personalisation will go where the love already is.
-- **Hold the problem tightly, hold the customer tightly, hold the solution loosely.** Not an external prediction — a personal bet about how he will spend the next decade.
+Intelligence, as I see it, is the ability to make meaning from information and take action on it. A good assistant does exactly that — takes information from your world, makes meaning of it, and acts. For decades, that meant hiring a person. Increasingly, it doesn't have to.
 
-## the bet on building over waiting
+Chotu is where this begins for me. An agent that handles your inbound while you're in deep work, speaks in your voice, posts on your behalf, keeps your world running when you step away. I built it first for myself — 10 days of Vipassana coming up, can't be responding to messages. But the real question it's asking is: what if everyone had this?
 
-A bet he made on himself, and committed to writing in his Obsidian journal on *18th January 2026*, is the meta-bet: *while your way of chasing clarity was waiting, while ours was creating*. He is staking the next phase of his life on the side of *building over waiting*. The same note documents the cost — relationships strained, conviction tested, a long honest list of what he shipped (Swalpa, the website, Digipin) and what he didn't (Instaprompt). He has named the difference between *limited time* and *limited intent*, and he is on the record about which one he wants to be. The bet is not that he will be right about the products. The bet is that he will keep being someone who ships, not someone who waits.
+Not a chatbot you talk to. An intelligence that acts for you.
+
+The trajectory I'm betting on: first it handles your tasks (executive assistant), then it thinks alongside you (chief of staff), then it becomes the layer between you and the world that makes your life run better regardless of whether you're watching. All three, in that order, for everyone — not just the people who can afford to hire a person.
+
+Mili was an early attempt at this for the elderly. Chotu is me living it myself. The bigger bet is the direction they're both pointing.
+
+---
+
+**The second bet: AI that earns its keep, not AI you pay for**
+
+Frontier AI is expensive to run. The natural response is paywalls — and we're already seeing it. But paywalls recreate the same old problem: the people who need help most, access it least.
+
+I spent years in ads at Flipkart. I know how ad-funded models work. The web was ad-funded attention — Google, YouTube, the whole thing. My bet is the next layer is ad-funded intelligence. Compute gets paid for by commerce, not users. You get your personal intelligence. Brands get reach at the moment of intent. Everyone wins.
+
+This isn't a feature idea. It's a thesis about how AI stays free.
+
+---
+
+**The third bet: effort is undervalued and attention is cheap**
+
+The internet rewards passivity. Scroll, tap, like, repeat. The experiences people actually remember are the ones they earned.
+
+I got into running a few years ago. Did a 5K, then a 10K, then a 25K, then clocked 49:50 at TCS World 10K this year. What I noticed: nothing beats the feeling of earning something. The unlock after the effort hits different than anything handed to you.
+
+There's a product somewhere in this — gating content, drops, experiences behind verifiable effort. Your morning run unlocks the unreleased track. Your meditation streak unlocks the chapter. 68% of Gen Z want less screen time (McKinsey 2024). A billion wearables are tracking effort in real time. The infrastructure exists. Someone will build the right thing on top of it.
+
+I haven't committed to building this yet. But I keep coming back to it.
+
+---
+
+**Smaller bets, held loosely**
+
+A few convictions that keep showing up in how I think, even when I'm not actively building on them:
+
+Proactive AI beats reactive AI. Chatbots that answer are a stop on the way. Agents that initiate are the destination.
+
+Kids and the elderly are almost entirely unaddressed by the major platforms. Everything was built for the working-age user.
+
+Offline ads are still running mostly blind while digital has six real-time dials. That gap gets measured eventually.
+
+Voice is the next interface for physical space. A tree in a park that talks to you. A museum installation that knows what you're looking at. The playful surface, the serious underlying bet.
+
+---
+
+**The meta bet**
+
+Underneath all of it is one bet I made on myself — building over waiting.
+
+The way I used to chase clarity was by waiting for the right moment. I've switched sides. The right moment is the one where you ship something. I've been on sabbatical for nearly a year, living off investments, building actively, testing what I believe against what actually works.
+
+Some things shipped. Some didn't. I know the difference between limited time and limited intent now. And I've decided which one I refuse to be.
+
+---

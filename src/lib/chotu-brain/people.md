@@ -101,3 +101,6 @@ met her on instagram because of the local train band art. my god what a story it
 
 25. Maitreyi
 met her on hinge - do not know about her a lot honestly. Just that she is a vibesy person who travels a lot and agreed to go on a therapist date with Anuj - pretending to be a couple. She seems fun and I would love to hangout once he is back in bangalore.
+
+26. Sarda
+honestly she is the one reason why - insti life became so much more fun from 2nd year and why i got to know about flipkart apm program. we shared stage as anchors back in 2018. have gone on multiple late night walks, seen each other in worst and best of times. I am mad a little because I considered her a good friend but she never met me even when she came to bangalore to visit her bf so many times. irrespective I am happy that she exists and has shifted to bangalor and we met some time back 

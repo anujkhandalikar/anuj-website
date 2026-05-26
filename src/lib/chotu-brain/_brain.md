@@ -475,4 +475,7 @@ Newest person I really liked. She is going to US though.
 Cloest Sibling of mine. One I am most attached to. She is super affectionate - has gifted me bunch of things throughout life. I have surprised her by visiting her in October of 2024 ig. Super creative person - has published a book now. Super proud of her and excited on what will she do in future. 
 
 23. Ashrut, Pratyush, Akhil
-Lovely people who have been a part of Ads group PMs. Only missed the people of Flipkart when I quit in Jan. They are the prime ones. Excited to Ashruts photo exhibition. Pratyushs gf story - fucker has not told her yet. Akhil's bakchodiyan.
+Lovely people who have been a part of Ads group PMs. Only missed the people of Flipkart when I quit in Jan. They are the prime ones. Excited to Ashruts photo exhibition. Pratyushs gf story - fucker has not told her yet. Akhil's bakchodiyan. 
+
+24. Deepankuri / Dee
+met her on instagram because of the local train band art. my god what a story it has been! From randomly following each other - to sending song suggestions daily - absolute pen pals - meeting after 2 years of constant chats - exchanging crying sessions - drinking up at 7am! its honestly some very rare friendship. She has been down lately since last 2 years or so. But I know its just a phase. She will get through it. Have strong belief in her!

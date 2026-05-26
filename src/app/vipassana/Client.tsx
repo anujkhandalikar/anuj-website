@@ -56,13 +56,13 @@ function counterText(status: Status): string {
 }
 
 const SUGGESTIONS = [
-  { label: "date him", prompt: "tell me about anuj — would i want to date him?" },
-  { label: "work with him", prompt: "what's anuj working on? would we be a fit?" },
-  { label: "just chat", prompt: "hey chotu — what's anuj been thinking about lately?" },
-  { label: "roast him", prompt: "roast anuj for me. don't hold back." },
-  { label: "schedule a meet", prompt: "i want to meet anuj when he's back. can you help set that up?" },
-  { label: "what's he like", prompt: "what kind of person is anuj? give me the real version." },
-  { label: "share something", prompt: "i just want to leave anuj a note for when he's back." },
+  { label: "💬 just chat", prompt: "hey chotu — what's anuj been thinking about lately?" },
+  { label: "💼 work with him", prompt: "what's anuj working on? would we be a fit?" },
+  { label: "❤️ date him", prompt: "tell me about anuj — would i want to date him?" },
+  { label: "🔥 roast him", prompt: "roast anuj for me. don't hold back." },
+  { label: "📅 schedule a meet", prompt: "i want to meet anuj when he's back. can you help set that up?" },
+  { label: "🤔 what's he like", prompt: "what kind of person is anuj? give me the real version." },
+  { label: "📝 share something", prompt: "i just want to leave anuj a note for when he's back." },
 ];
 
 export default function VipassanaClient({
@@ -82,8 +82,52 @@ export default function VipassanaClient({
   const [identitySaved, setIdentitySaved] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
+  const carouselRef = useRef<HTMLDivElement>(null);
 
   const hasChatted = messages.length > 0;
+
+  useEffect(() => {
+    if (hasChatted) return;
+    const el = carouselRef.current;
+    if (!el) return;
+
+    let animationId: number;
+    let isHovering = false;
+    let currentScroll = el.scrollLeft;
+
+    const scroll = () => {
+      if (!isHovering) {
+        currentScroll += 0.5;
+        if (currentScroll >= el.scrollWidth / 2) {
+          currentScroll -= el.scrollWidth / 2;
+        }
+        el.scrollLeft = currentScroll;
+      } else {
+        currentScroll = el.scrollLeft;
+      }
+      animationId = requestAnimationFrame(scroll);
+    };
+
+    const handleEnter = () => { isHovering = true; };
+    const handleLeave = () => { isHovering = false; };
+    const handleTouch = () => {
+      isHovering = true;
+      setTimeout(() => { isHovering = false; }, 2000);
+    };
+
+    el.addEventListener('mouseenter', handleEnter);
+    el.addEventListener('mouseleave', handleLeave);
+    el.addEventListener('touchstart', handleTouch, { passive: true });
+
+    animationId = requestAnimationFrame(scroll);
+
+    return () => {
+      cancelAnimationFrame(animationId);
+      el.removeEventListener('mouseenter', handleEnter);
+      el.removeEventListener('mouseleave', handleLeave);
+      el.removeEventListener('touchstart', handleTouch);
+    };
+  }, [hasChatted]);
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -304,10 +348,13 @@ export default function VipassanaClient({
           </div>
 
             {!hasChatted && (
-              <div className="flex gap-2 overflow-x-auto [&::-webkit-scrollbar]:hidden [scrollbar-width:none] pb-1 -mx-6 px-6">
-              {SUGGESTIONS.map((s) => (
+              <div 
+                ref={carouselRef}
+                className="flex gap-2 overflow-x-auto [&::-webkit-scrollbar]:hidden [scrollbar-width:none] [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)] pb-1 -mx-6 px-6"
+              >
+              {[...SUGGESTIONS, ...SUGGESTIONS].map((s, idx) => (
                 <button
-                  key={s.label}
+                  key={`${s.label}-${idx}`}
                   onClick={() => pickSuggestion(s.prompt)}
                   className="text-[12.5px] text-zinc-300 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 hover:border-zinc-700 rounded-full px-3 py-1.5 transition-colors whitespace-nowrap shrink-0"
                 >
@@ -315,7 +362,7 @@ export default function VipassanaClient({
                 </button>
               ))}
             </div>
-          )}
+            )}
 
           {error && <div className="text-[12px] text-red-400">{error}</div>}
 

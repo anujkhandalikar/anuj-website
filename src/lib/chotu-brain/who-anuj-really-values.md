@@ -1,0 +1,29 @@
+# who anuj really values
+
+## family is the load-bearing wall
+
+Anuj keeps showing up in his own writing as a son and a brother before he shows up as anything else. His Obsidian note from December 2021 — written through tears — names three people whose stake in him is non-trivial: his grandfather (*dada*), his school mentor *Rajendra sir*, and Urvi who *has literally seen the entirety of the journey*. The sentence he closes with — *man, lot of stakeholders* — is unromantic and exact. He treats his life as something other people have invested in, and he is on the record about it.
+
+His mom is the single most-recurring presence in his writing. In *Things to do with mom* he lists a quiet program: take her on a trip alone, teach her English, support her singing, help her get a driving license. In *Article 9: Little things* he tells the *"Hello ween"* story — opening a text in the middle of work meetings to find a photo of his mother celebrating her first-ever Halloween with friends. In the Medium piece *Reflections of Today: 2* he writes about her drifting to sleep during movie trailers and feels it like a small earthquake: *as I am turning an adult, my parents are drifting to a later stages of life. That is inevitable, lawful, sensible but saddening.* His Obsidian aside in *June 22nd 2021* puts the relationship plainly: *moms cannot consider kids as a separate entity at all. We belong to no religion, no country, we belong to our mothers.*
+
+His grandfather shows up across years as the source of his most-used working maxims — *triad philosophy*, *clarity over confidence*, *make a tree diagram* — from *placement strategy* and his later Mili-era vision docs. His brother appears in *Reflections Part 3 v2* through a single chess game played over a pandemic afternoon, which becomes a meditation on family being together long enough to actually be a family. His written affection for his parents and brother is not performative. It is a structural assumption.
+
+## the IIT five-year explosion of people
+
+The other place his life filled up with people is IIT Madras. His Obsidian note *2* describes the period flatly: *world exploded beyond measures, realised the gehraiuan with people.* He lists twelve friends by name from that era and calls them by their nicknames — Ajinkya, Ayush, Amit, Choti, Sarda, Lalitha, Pranit, Srini, Sanjeed, Mihir, Radheshyam, Shubham. He writes *2.0 made me realise my love for people and stories.* Two of those names — Sanjeed and Srinivas — are now his Mili co-founders, eight years later. He treats the friends from that era not as a yearbook but as a working cohort he still drafts on.
+
+## the new partner-in-experiences
+
+The current most-cited collaborator in his writing is Chaitnya, whom he calls Chai. In *Chali Kahani*, the two of them set up the community manifesto in plural — *we keep chasing experiences simply because the alternative (a normal life) sounds limiting* — and the whole document is co-authored in voice and intent. The Chali Kahani sub-communities (Write Club, Frames, Find Something Beautiful) are how he and Chai turn the abstract belief that *things are better together* into something operational. The friendship is a builder partnership and a play partnership at the same time.
+
+## the kind of conversations he is actually hungry for
+
+In *Miscellaneous*, written 9 November 2021, Anuj is specific about the conversations he most enjoys. Two kinds. Intellectual ones — *I would give up anything for a walk with legends like Nolan, Anand Gandhi, Kunal Shah* — and casual ones. He is clear-eyed about the limits of the first kind: *deep talks are exhausting. More often than not, people fake their interest. They engage in discussions, but don't repeat.* So he saves the deep mode for the people who can stay in it, and lets the rest be light. He also names the smallest acts that earn his loyalty — in *Chali Kahani / Write Club*, his definition of beauty includes *a friend pausing a video if you go away for a bit for drinking water, storing a chocolate wrapper of your school crush*. The bar for *care* in his writing is small and specific.
+
+## the house full of love is still being built
+
+The single most recurring aspiration in his writing about people is what he calls *house full of love* — the third corner of his fit-body × fit-mind × house-full-of-love triad. He carries this across years. The Obsidian note *Research Best Relationships* opens with the line *have a big dream to have a house full of love because did not have it for [my family]*, treating it as a longing that comes from a specific hole. *p_family* breaks the dream down even more soberly: *me being good on my own, she being good on her own, have kids, have good house, have good amounts of money* — *one plus one is eleven*, in his words. The tracker in *jazbaa_junoon — shanti_sukoon* (as of 25th March 2025) is honest about how much of this is still in motion: he is committed to the house, less committed to the discrete steps, and willing to write down both.
+
+## belief, and a small list of empowerments
+
+The Ted Lasso line he latches onto in *Article 9: Little things* is the one about belief — *more importantly, I think they need to believe in themselves*. It clicks because it matches what he writes elsewhere: that the most valuable thing one person can give another is the strong assumption that they will turn out all right. His Obsidian note *things that empower me*, written 22 September 2021, is the working list of what charges him — writing, small wins, great conversations, a warm coffee in the morning, making people laugh, *hugs from close friends*, his mom genuinely appreciating something, solitude on Sundays, running. Most items on that list involve other people. He is honest about being recharged by them, and just as honest about needing solitude to come back to them.

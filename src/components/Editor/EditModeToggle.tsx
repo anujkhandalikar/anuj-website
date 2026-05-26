@@ -3,11 +3,15 @@
 import { useState } from "react";
 import { useEdit } from "@/lib/EditContext";
 import LoginModal from "@/components/Auth/LoginModal";
+import { usePathname } from "next/navigation";
 
 export default function EditModeToggle() {
+  const pathname = usePathname();
   const { isAuthenticated, isEditMode, setIsEditMode, checkAuth, logout } =
     useEdit();
   const [showLogin, setShowLogin] = useState(false);
+
+  if (pathname?.startsWith("/vipassana")) return null;
 
   const handleEditClick = () => {
     if (!isAuthenticated) {

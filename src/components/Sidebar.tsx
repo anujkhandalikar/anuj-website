@@ -15,6 +15,8 @@ interface SidebarProps {
 
 export default function Sidebar({ pages, isAuthenticated }: SidebarProps) {
     const pathname = usePathname();
+    // /vipassana renders its own standalone shell — bypass global nav.
+    if (pathname?.startsWith("/vipassana")) return null;
     // derived active slug from pathname
     // pathname can be "/" (activeSlug = 'about' effectively if we consider home as about)
     // or "/slug"

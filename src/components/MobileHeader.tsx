@@ -9,17 +9,21 @@ import ThemeToggle from "./ThemeToggle";
 import { useEdit } from "@/lib/EditContext";
 import LoginModal from "@/components/Auth/LoginModal";
 import { track } from "@/lib/analytics";
+import { usePathname } from "next/navigation";
 
 interface MobileHeaderProps {
     pages: SidebarPage[];
 }
 
 export default function MobileHeader({ pages }: MobileHeaderProps) {
+    const pathname = usePathname();
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
     const lastTapRef = useRef<number>(0);
     const { isAuthenticated, isEditMode, setIsEditMode, checkAuth } = useEdit();
     const [showLogin, setShowLogin] = useState(false);
+
+    if (pathname?.startsWith("/vipassana")) return null;
 
     // Close dropdown when clicking outside
     useEffect(() => {

@@ -95,7 +95,7 @@ export async function POST(request: Request) {
       "budget_exceeded",
       {
         message:
-          "Chotu's API budget for the Vipassana period has been used up. Drop Anuj an email instead — anujkhandalikar027@gmail.com.",
+          "Chotu's API budget has been used up for now. Drop Anuj an email instead — anujkhandalikar027@gmail.com.",
       },
     );
   }

@@ -1,9 +1,9 @@
 import VipassanaClient from "./Client";
 
 export const metadata = {
-  title: "Chotu — Anuj is on Vipassana",
+  title: "Chotu — Anuj's digital proxy",
   description:
-    "Anuj is on Vipassana (27 May → 7 June 2026). Chotu is his proxy. Ask anything.",
+    "Chotu is Anuj's digital stand-in, built in his own words. Ask anything.",
 };
 
 // Vipassana: 27 May 2026 → 7 June 2026. Returns 8 June.

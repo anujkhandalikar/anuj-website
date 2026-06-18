@@ -81,7 +81,7 @@ const SUGGESTIONS = [
   { label: "🧠 brainstorm with him", prompt: "i want to brainstorm something with anuj. how do we set that up?" },
   { label: "❤️ date him", prompt: "tell me about anuj — would i want to date him?" },
   { label: "🔥 roast him", prompt: "roast anuj for me. don't hold back." },
-  { label: "📅 meet him", prompt: "i want to meet anuj when he's back. can you help set that up?" },
+  { label: "📅 meet him", prompt: "i want to meet anuj. can you help set that up?" },
 ];
 
 export default function VipassanaClient({
@@ -450,7 +450,7 @@ export default function VipassanaClient({
 
           {identitySaved && !showIdentify && (
             <div className="text-[11px] text-zinc-500">
-              got it — anuj will follow up when he's back.{" "}
+              got it — anuj will follow up directly.{" "}
               <button
                 onClick={() => setShowIdentify(true)}
                 className="underline underline-offset-2 hover:text-zinc-300"

@@ -259,7 +259,7 @@ That gap is what I'm building toward closing.
 
 Intelligence, as I see it, is the ability to make meaning from information and take action on it. A good assistant does exactly that — takes information from your world, makes meaning of it, and acts. For decades, that meant hiring a person. Increasingly, it doesn't have to.
 
-Chotu is where this begins for me. An agent that handles your inbound while you're in deep work, speaks in your voice, posts on your behalf, keeps your world running when you step away. I built it first for myself — 10 days of Vipassana coming up, can't be responding to messages. But the real question it's asking is: what if everyone had this?
+Chotu is where this begins for me. An agent that handles your inbound while you're in deep work, speaks in your voice, posts on your behalf, keeps your world running when you step away. I built it first for myself — to hold the fort through 10 days of Vipassana when I couldn't respond to anything. But the real question it's asking is: what if everyone had this?
 
 Not a chatbot you talk to. An intelligence that acts for you.
 
@@ -376,11 +376,11 @@ So I put out a WhatsApp group. Invited some people. Said — 30 days, one beauti
 We grew to about 50 people. People loved it more than I expected. I think because it's not productivity. It's not self-improvement. It's just — attention. Trained slowly, together. Humans are wired for pessimism — survival instinct and all that. But we're way past survival. Noticing beauty is how I remind myself of that.
 Chotu now handles the daily posting to the group when I am unavailable. Which feels right — the experiment continues even when I step away. That's kind of the point.
 
-From 27th May to 7th June I will be completely unreachable. Going to Vipassana. 11 hour meditation days, no phone, no eye contact, no reading writing — only meditation. Vipassana literally means "to see as things are." It teaches you everything around us, inside us, about us — is temporary.
-This is also why Chotu exists in the first place. Since I will be unreachable, literally dead for everyone — I will rise back on 6th June — here is what I want people to know when I am away:
+I just got back from 10 days of Vipassana (27th May to 7th June). 11 hour meditation days, no phone, no eye contact, no reading writing — only meditation. Vipassana literally means "to see as things are." It teaches you everything around us, inside us, about us — is temporary. I came back from it lighter and clearer on where I'm headed next (more on that soon).
+This is also why Chotu exists in the first place. While I was away — unreachable, dead to the world — Chotu held the fort. Here's what still holds:
 
 Chotu will answer your queries to the best of his capacity
-You can set time with me post-vipassana in case he could not help
+You can set time with me directly in case he could not help
 You can reach out to Chotu to — work with me, date me, or hire me
 Every state you are going through is temporary and it will pass
 
@@ -392,6 +392,11 @@ Strong likes :
 
 Strong dislikes : 
 1. place : delhi. hate this place mannnnn. have been here 3 times and everytime i have been here - some or the other problem has been there.
+
+Where to find me (my socials — just these three, nothing else) :
+- Website : https://anujk.in
+- Instagram : https://www.instagram.com/anuj.khandalikar
+- X : https://x.com/mahaulguy
 
 ---
 

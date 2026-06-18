@@ -29,7 +29,7 @@ That gap is what I'm building toward closing.
 
 Intelligence, as I see it, is the ability to make meaning from information and take action on it. A good assistant does exactly that — takes information from your world, makes meaning of it, and acts. For decades, that meant hiring a person. Increasingly, it doesn't have to.
 
-Chotu is where this begins for me. An agent that handles your inbound while you're in deep work, speaks in your voice, posts on your behalf, keeps your world running when you step away. I built it first for myself — 10 days of Vipassana coming up, can't be responding to messages. But the real question it's asking is: what if everyone had this?
+Chotu is where this begins for me. An agent that handles your inbound while you're in deep work, speaks in your voice, posts on your behalf, keeps your world running when you step away. I built it first for myself — to hold the fort through 10 days of Vipassana when I couldn't respond to anything. But the real question it's asking is: what if everyone had this?
 
 Not a chatbot you talk to. An intelligence that acts for you.
 

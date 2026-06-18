@@ -301,14 +301,26 @@ export default function VipassanaClient({
         return;
       }
     }
+    const n = name.trim();
+    const e = email.trim();
     try {
-      const n = name.trim();
-      const e = email.trim();
       if (n) localStorage.setItem("chotu.name", n);
       else localStorage.removeItem("chotu.name");
       if (e) localStorage.setItem("chotu.email", e);
       else localStorage.removeItem("chotu.email");
     } catch {}
+    // persist whatever they gave us to the conversation row (if one exists yet)
+    if (conversationId && (n || e)) {
+      fetch("/api/vipassana/identify", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          conversation_id: conversationId,
+          name: n || undefined,
+          email: e || undefined,
+        }),
+      }).catch(() => {});
+    }
     setIdentitySaved(true);
     setShowIdentify(false);
   }
